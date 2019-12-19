@@ -20,7 +20,9 @@ public class GithubProvider {
                 .post(body)
                 .build();
         try (Response response = client.newCall(request).execute()) {
-            return response.body().string();
+            if (response != null && response.body() != null) {
+                return response.body().string();
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -30,13 +32,14 @@ public class GithubProvider {
     public GithubUser getGithubUser(String accessToken) {
         OkHttpClient client = new OkHttpClient();
         Request request = new Request.Builder()
-            .url("https://api.github.com/user" + accessToken)
+            .url("https://api.github.com/user?" + accessToken)
             .build();
 
         try (Response response = client.newCall(request).execute()) {
-            String string = response.body().string();
-            GithubUser githubUser = JSON.parseObject(string, GithubUser.class);
-            return githubUser;
+            if (response != null && response.body() != null) {
+                String userData = response.body().string();
+                return JSON.parseObject(userData, GithubUser.class);
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }
