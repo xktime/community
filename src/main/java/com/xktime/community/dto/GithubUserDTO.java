@@ -1,6 +1,6 @@
 package com.xktime.community.dto;
 
-public class GithubUser {
+public class GithubUserDTO {
     private String name;
     private String id;
     private String bio;

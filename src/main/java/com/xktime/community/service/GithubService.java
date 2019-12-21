@@ -1,15 +1,15 @@
-package com.xktime.community.provider;
+package com.xktime.community.service;
 
 import com.alibaba.fastjson.JSON;
 import com.xktime.community.dto.AccessTokenDTO;
-import com.xktime.community.dto.GithubUser;
+import com.xktime.community.dto.GithubUserDTO;
 import okhttp3.*;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 
 @Component
-public class GithubProvider {
+public class GithubService {
 
     public String getAccessToken (AccessTokenDTO accessTokenDTO) {
         MediaType mediaType = MediaType.get("application/json; charset=utf-8");
@@ -29,7 +29,7 @@ public class GithubProvider {
         return null;
     }
 
-    public GithubUser getGithubUser(String accessToken) {
+    public GithubUserDTO getGithubUser(String accessToken) {
         OkHttpClient client = new OkHttpClient();
         Request request = new Request.Builder()
             .url("https://api.github.com/user?" + accessToken)
@@ -38,7 +38,7 @@ public class GithubProvider {
         try (Response response = client.newCall(request).execute()) {
             if (response != null && response.body() != null) {
                 String userData = response.body().string();
-                return JSON.parseObject(userData, GithubUser.class);
+                return JSON.parseObject(userData, GithubUserDTO.class);
             }
         } catch (IOException e) {
             e.printStackTrace();
