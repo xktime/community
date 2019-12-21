@@ -1,7 +1,7 @@
 package com.xktime.community.controller;
 
-import com.xktime.community.dto.AccessTokenDTO;
-import com.xktime.community.dto.GithubUserDTO;
+import com.xktime.community.model.dto.AccessTokenDTO;
+import com.xktime.community.model.dto.GithubUserDTO;
 import com.xktime.community.service.GithubService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;

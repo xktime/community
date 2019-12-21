@@ -1,4 +1,4 @@
-package com.xktime.community.model;
+package com.xktime.community.model.entity;
 
 public class User {
     private int id;

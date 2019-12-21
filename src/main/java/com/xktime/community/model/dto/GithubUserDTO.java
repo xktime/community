@@ -1,4 +1,4 @@
-package com.xktime.community.dto;
+package com.xktime.community.model.dto;
 
 public class GithubUserDTO {
     private String name;
