@@ -10,16 +10,24 @@ import java.util.UUID;
 
 @Service
 public class UserService {
-	@Autowired
-	private UserRepository userRepository;
+    @Autowired
+    private UserRepository userRepository;
 
-	public void saveUser(GithubUserDTO githubUser) {
-		User user = new User();
-		user.setAccount_id(githubUser.getId());
-		user.setToken(UUID.randomUUID().toString());
-		user.setBio(githubUser.getBio());
-		user.setLogin(githubUser.getLogin());
-		user.setName(githubUser.getName());
-		userRepository.saveUser(user);
-	}
+    public User transferGithubUserToUser(GithubUserDTO githubUser) {
+        User user = new User();
+        user.setToken(UUID.randomUUID().toString());
+        user.setAccount_id(githubUser.getId());
+        user.setBio(githubUser.getBio());
+        user.setLogin(githubUser.getLogin());
+        user.setName(githubUser.getName());
+        return user;
+    }
+
+    public void saveUser(User user) {
+        userRepository.saveUser(user);
+    }
+
+    public User findByToken(String token) {
+        return userRepository.findByToken(token);
+    }
 }
