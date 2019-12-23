@@ -24,12 +24,10 @@ public class AuthorizeLoginController {
     @GetMapping("/callback")
     public String callback(@RequestParam(name = "code") String code,
                            @RequestParam(name = "state") String state,
-                           HttpServletRequest request,
                            HttpServletResponse response) {
         User user = githubService.getUser(code, state);
         if (user != null) {
             userService.saveUser(user);
-            request.getSession().setAttribute("user", user);
             response.addCookie(new Cookie("token", user.getToken()));
             return "redirect:/";
         } else {
