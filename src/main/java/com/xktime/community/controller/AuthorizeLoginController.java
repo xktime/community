@@ -24,7 +24,7 @@ public class AuthorizeLoginController {
                            HttpServletRequest request) {
         GithubUserDTO user = githubService.getGithubUser(code, state);
         if (user != null) {
-            userService.insert(user);
+            userService.saveUser(user);
             request.getSession().setAttribute("user", user);
             return "redirect:/";
         } else {

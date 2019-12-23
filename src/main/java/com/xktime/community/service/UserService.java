@@ -13,7 +13,7 @@ public class UserService {
 	@Autowired
 	private UserRepository userRepository;
 
-	public void insert(GithubUserDTO githubUser) {
+	public void saveUser(GithubUserDTO githubUser) {
 		User user = new User();
 		user.setAccount_id(githubUser.getId());
 		user.setToken(UUID.randomUUID().toString());
