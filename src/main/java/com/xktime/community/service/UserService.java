@@ -13,16 +13,6 @@ public class UserService {
     @Autowired
     private UserRepository userRepository;
 
-    public User transferGithubUserToUser(GithubUserDTO githubUser) {
-        User user = new User();
-        user.setToken(UUID.randomUUID().toString());
-        user.setAccount_id(githubUser.getId());
-        user.setBio(githubUser.getBio());
-        user.setLogin(githubUser.getLogin());
-        user.setName(githubUser.getName());
-        return user;
-    }
-
     public void saveUser(User user) {
         userRepository.saveUser(user);
     }

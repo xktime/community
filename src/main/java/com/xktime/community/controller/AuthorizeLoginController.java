@@ -26,14 +26,11 @@ public class AuthorizeLoginController {
                            @RequestParam(name = "state") String state,
                            HttpServletRequest request,
                            HttpServletResponse response) {
-        GithubUserDTO githubUser = githubService.getGithubUser(code, state);
-        if (githubUser != null) {
-            User user = userService.transferGithubUserToUser(githubUser);
-            if (user != null) {
-                userService.saveUser(user);
-                request.getSession().setAttribute("user", user);
-                response.addCookie(new Cookie("token", user.getToken()));
-            }
+        User user = githubService.getUser(code, state);
+        if (user != null) {
+            userService.saveUser(user);
+            request.getSession().setAttribute("user", user);
+            response.addCookie(new Cookie("token", user.getToken()));
             return "redirect:/";
         } else {
             return "redirect:/";

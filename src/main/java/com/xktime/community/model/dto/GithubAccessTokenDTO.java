@@ -1,6 +1,6 @@
 package com.xktime.community.model.dto;
 
-public class AccessTokenDTO {
+public class GithubAccessTokenDTO {
     private String client_id;
     private String client_secret;
     private String code;
