@@ -1,5 +1,7 @@
 package com.xktime.community.model.entity;
 
+import java.util.Date;
+
 public class User {
     private int id;
     private String name;
@@ -7,6 +9,7 @@ public class User {
     private String bio;
     private String login;
     private String token;
+    private Date loginTime;
 
     public int getId() {
         return id;
@@ -54,5 +57,13 @@ public class User {
 
     public void setToken(String token) {
         this.token = token;
+    }
+
+    public Date getLoginTime() {
+        return loginTime;
+    }
+
+    public void setLoginTime(Date loginTime) {
+        this.loginTime = loginTime;
     }
 }

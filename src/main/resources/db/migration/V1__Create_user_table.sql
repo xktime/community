@@ -1,12 +1,13 @@
-create table user
+CREATE TABLE user
 (
-	id int auto_increment
-		primary key,
-	name varchar(10) null,
-	account_id varchar(20) null,
-	bio varchar(256) null,
-	login varchar(10) null,
-	token varchar(36) null
-)
-;
+    id int PRIMARY KEY AUTO_INCREMENT,
+    name varchar(10),
+    account_id varchar(20),
+    bio varchar(256),
+    login varchar(10),
+    token varchar(36),
+    login_time datetime
+);
+CREATE UNIQUE INDEX user_id_uindex ON user (id);
+CREATE UNIQUE INDEX user_account_id_uindex ON user (account_id);
 
