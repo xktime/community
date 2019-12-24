@@ -1,7 +1,7 @@
 package com.xktime.community.controller;
 
 import com.xktime.community.model.entity.User;
-import com.xktime.community.service.GithubLoginService;
+import com.xktime.community.service.login.GithubLoginServiceImpl;
 import com.xktime.community.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -14,17 +14,17 @@ import javax.servlet.http.HttpServletResponse;
 
 @Controller
 @RequestMapping("callback")
-public class AuthorizeLoginController {
+public class AuthorizeCallbackController {
 
     @Autowired
-    private GithubLoginService githubService;
+    private GithubLoginServiceImpl githubService;
     @Autowired
     private UserService userService;
 
     @GetMapping("/github")
     public String github(@RequestParam(name = "code") String code,
-                           @RequestParam(name = "state") String state,
-                           HttpServletResponse response) {
+                         @RequestParam(name = "state") String state,
+                         HttpServletResponse response) {
         User user = githubService.getUser(code, state);
         if (user != null) {
             userService.saveUser(user);

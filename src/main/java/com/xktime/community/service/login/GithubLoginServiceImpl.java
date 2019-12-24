@@ -1,10 +1,12 @@
-package com.xktime.community.service;
+package com.xktime.community.service.login;
 
 import com.alibaba.fastjson.JSON;
 import com.xktime.community.model.dto.GithubAccessTokenDTO;
 import com.xktime.community.model.dto.GithubUserDTO;
 import com.xktime.community.model.entity.User;
+import com.xktime.community.model.enums.ScopeEnum;
 import okhttp3.*;
+import org.apache.ibatis.annotations.Arg;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -12,14 +14,17 @@ import java.io.IOException;
 import java.util.UUID;
 
 @Service
-public class GithubLoginService {
-    @Value("${github.client.id}")
+public class GithubLoginServiceImpl implements LoginService {
+    @Value("${login.github.client.id}")
     private String client_id;
-    @Value("${github.redirect.client_secret}")
+    @Value("${login.github.redirect.client_secret}")
     private String client_secret;
-    @Value("${github.redirect.uri}")
+    @Value("${login.github.redirect.uri}")
     private String redirect_uri;
+    @Value("${login.github.request.uri}")
+    private String request_uri;
 
+    @Override
     public User getUser(String code, String state) {
         GithubUserDTO githubUserDTO = getGithubUser(code, state);
         if (githubUserDTO == null) {
@@ -27,6 +32,48 @@ public class GithubLoginService {
         }
         return transferGithubUserToUser(githubUserDTO);
     }
+
+    /**
+     *
+     * @param state  随机值，用来防止 cross-sit 攻击
+     * @param scope 指定了最后能获取到的信息，取值范围有 user 和 repo 等等,默认同时取 user 和 repo 的信息
+     * @param allowSignUp 是否允许用户在认证的时候注册 Github 账号
+     * @return
+     */
+    @Override
+    public String getOAuthRedirectURL(String state, ScopeEnum scope, boolean allowSignUp) {
+        if (state == null) {
+            throw new IllegalArgumentException("state不能为空");
+        }
+        StringBuilder requestUri = new StringBuilder(request_uri).append("?");
+        requestUri.append("client_id=").append(client_id);
+        requestUri.append("&redirect_uri=").append(requestUri);
+        requestUri.append("&state=").append(state);
+        if (scope != null) {
+            requestUri.append("&scope=").append(scope.getValue());
+        }
+        requestUri.append("&allow_signup=").append(allowSignUp);
+        return requestUri.toString();
+    }
+
+    /**
+     *
+     * @param state  随机值，用来防止 cross-sit 攻击
+     * @param login 推荐登录的 Github 账户
+     * @param scope 指定了最后能获取到的信息，取值范围有 user 和 repo 等等,默认同时取 user 和 repo 的信息
+     * @param allowSignUp 是否允许用户在认证的时候注册 Github 账号
+     * @return
+     */
+    @Override
+    public String getOAuthRedirectURL(String state, String login, ScopeEnum scope, boolean allowSignUp) {
+        if (state == null) {
+            throw new IllegalArgumentException("state不能为空");
+        }
+        StringBuilder requestUri = new StringBuilder(getOAuthRedirectURL(state, scope, allowSignUp));
+        requestUri.append("&login=").append(login);
+        return requestUri.toString();
+    }
+
 
     private User transferGithubUserToUser(GithubUserDTO githubUser) {
         User user = new User();
