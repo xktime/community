@@ -11,10 +11,25 @@ public class UserService {
     private UserRepository userRepository;
 
     public void saveUser(User user) {
-        userRepository.saveUser(user);
+        if (user == null) {
+            throw new NullPointerException("User不能为空");
+        }
+        if (findByAccountId(user.getAccount_id()) == null) {
+            userRepository.saveUser(user);
+        } else {
+            update(user);
+        }
     }
 
     public User findByToken(String token) {
         return userRepository.findByToken(token);
+    }
+
+    public User findByAccountId(String accountId) {
+        return userRepository.findByAccountId(accountId);
+    }
+
+    public void update(User user) {
+        userRepository.updateUser(user);
     }
 }

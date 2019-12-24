@@ -21,7 +21,7 @@ public class AuthorizeCallbackController {
     @Autowired
     private UserService userService;
 
-    @GetMapping("/github")
+    @GetMapping("github")
     public String github(@RequestParam(name = "code") String code,
                          @RequestParam(name = "state") String state,
                          HttpServletResponse response) {

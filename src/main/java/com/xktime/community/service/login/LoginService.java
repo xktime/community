@@ -7,8 +7,8 @@ public interface LoginService {
 
     User getUser(String code, String state);
 
-    String getOAuthRedirectURL(String state, ScopeEnum scope, boolean allow_signup);
+    String getOAuthRedirectURL(String state, ScopeEnum scope, boolean allowSignUp);
 
-    String getOAuthRedirectURL(String state, String login, ScopeEnum scope, boolean allow_signup);
+    String getOAuthRedirectURL(String state, String login, ScopeEnum scope, boolean allowSignUp);
 
 }

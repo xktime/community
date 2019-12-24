@@ -6,11 +6,11 @@ import com.xktime.community.model.dto.GithubUserDTO;
 import com.xktime.community.model.entity.User;
 import com.xktime.community.model.enums.ScopeEnum;
 import okhttp3.*;
-import org.apache.ibatis.annotations.Arg;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
+import java.util.Date;
 import java.util.UUID;
 
 @Service
@@ -81,7 +81,10 @@ public class GithubLoginServiceImpl implements LoginService {
         user.setAccount_id(githubUser.getId());
         user.setBio(githubUser.getBio());
         user.setLogin(githubUser.getLogin());
-        user.setName(githubUser.getName());
+        //如果设置了名字就用名字，否则用账户名
+        String name = githubUser.getName() == null ? githubUser.getLogin() : githubUser.getName();
+        user.setName(name);
+        user.setLoginTime(new Date());
         return user;
     }
 
