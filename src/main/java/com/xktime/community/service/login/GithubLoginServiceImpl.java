@@ -78,9 +78,10 @@ public class GithubLoginServiceImpl implements LoginService {
     private User transferGithubUserToUser(GithubUserDTO githubUser) {
         User user = new User();
         user.setToken(UUID.randomUUID().toString());
-        user.setAccount_id(githubUser.getId());
+        user.setAccountId(githubUser.getId());
         user.setBio(githubUser.getBio());
         user.setLogin(githubUser.getLogin());
+        user.setAvatarUrl(githubUser.getAvatar_url());
         //如果设置了名字就用名字，否则用账户名
         String name = githubUser.getName() == null ? githubUser.getLogin() : githubUser.getName();
         user.setName(name);

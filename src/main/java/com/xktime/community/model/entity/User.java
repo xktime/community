@@ -8,9 +8,10 @@ import java.util.Date;
 public class User {
     private int id;
     private String name;
-    private String account_id;
+    private String accountId;
     private String bio;
     private String login;
     private String token;
     private Date loginTime;
+    private String avatarUrl;
 }

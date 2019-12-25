@@ -14,7 +14,10 @@ public class UserService {
         if (user == null) {
             throw new NullPointerException("User不能为空");
         }
-        if (findByAccountId(user.getAccount_id()) == null) {
+        if (user.getAccountId() == null) {
+            throw new NullPointerException("User请求数据错误");
+        }
+        if (findByAccountId(user.getAccountId()) == null) {
             userRepository.saveUser(user);
         } else {
             update(user);

@@ -32,6 +32,11 @@ public class PublishController {
                        Model model) {
         model.addAttribute("title", title);
         model.addAttribute("content", content);
+        User user = (User) request.getSession().getAttribute("user");
+        if (user == null) {
+            model.addAttribute("error", "用户未登录");
+            return "publish";
+        }
         if (StringUtils.isBlank(title)) {
             model.addAttribute("error", "标题不能为空");
             return "publish";
@@ -40,12 +45,7 @@ public class PublishController {
             model.addAttribute("error", "内容不能为空");
             return "publish";
         }
-        User user = (User) request.getSession().getAttribute("user");
-        if (user == null) {
-            model.addAttribute("error", "用户未登录");
-            return "publish";
-        }
-        Article article = new Article(title, content, user.getAccount_id(), new Date());
+        Article article = new Article(title, content, user.getAccountId(), new Date());
         publishService.saveArticle(article);
         return "redirect:/";
     }
