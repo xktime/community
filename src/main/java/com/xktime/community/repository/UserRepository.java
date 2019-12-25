@@ -5,10 +5,10 @@ import org.apache.ibatis.annotations.*;
 
 @Mapper
 public interface UserRepository {
-    @Insert("INSERT INTO user(name,account_id,bio,login,token,login_time) VALUES (#{name},#{account_id},#{bio},#{login},#{token},#{loginTime})")
+    @Insert("INSERT INTO user(name,account_id,bio,login,token,login_time,avatar_url) VALUES (#{name},#{accountId},#{bio},#{login},#{token},#{loginTime},#{avatarUrl})")
     void saveUser(User user);
 
-    @Update("UPDATE user SET token = #{token}, login_time = #{loginTime}, bio = #{bio}, name = #{name}")
+    @Update("UPDATE user SET token = #{token}, login_time = #{loginTime}, bio = #{bio}, name = #{name}, avatar_url = #{avatarUrl}")
     void updateUser(User user);
 
     @Select("SELECT * FROM user WHERE token = #{token}")

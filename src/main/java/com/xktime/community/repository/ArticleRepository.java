@@ -1,7 +1,6 @@
 package com.xktime.community.repository;
 
 import com.xktime.community.model.entity.Article;
-import com.xktime.community.model.entity.User;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 

@@ -45,7 +45,7 @@ public class PublishController {
             model.addAttribute("error", "用户未登录");
             return "publish";
         }
-        Article article = new Article(title, content, user.getAccount_id(), new Date());
+        Article article = new Article(title, content, user.getAccountId(), new Date());
         publishService.saveArticle(article);
         return "redirect:/";
     }
