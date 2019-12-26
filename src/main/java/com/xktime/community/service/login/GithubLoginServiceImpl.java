@@ -6,6 +6,7 @@ import com.xktime.community.model.dto.GithubUserDTO;
 import com.xktime.community.model.entity.User;
 import com.xktime.community.model.enums.ScopeEnum;
 import okhttp3.*;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 

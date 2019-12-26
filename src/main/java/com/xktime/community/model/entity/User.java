@@ -2,6 +2,7 @@ package com.xktime.community.model.entity;
 
 import lombok.Data;
 
+import javax.persistence.Column;
 import java.util.Date;
 
 @Data
