@@ -51,40 +51,40 @@
     </div>
 </nav>
     <div class="container-fluid">
-    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-6">
-        <h2><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> 发表新帖</h2>
-        <form action="/publish/post" method="post">
-            <div class="form-group">
-                <label for="title">标题:</label>
-                <input type="text" class="form-control" th:value="${title}" id="title" name="title"
-                       placeholder="请填写标题:"
-                       autocomplete="off">
-            </div>
-            <div class="form-group" id="question-editor">
-                <label for="content">内容:</label>
-                <textarea name="content" th:text="${content}" id="content" style="resize:none;"
-                          placeholder="编辑内容"
-                          class="form-control"
-                          cols="30"
-                          rows="10"></textarea>
-            </div>
-            <div class="container-fluid main ">
-                <div class="row">
-                    <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12">
-                        <div class="alert alert-danger col-lg-12 col-md-12 col-sm-12 col-xs-12"
-                             th:text="${error}"
-                             th:if="${error != null}">
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-6">
+            <h2><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> 发表新帖</h2>
+            <form action="/publish/post" method="post">
+                <div class="form-group">
+                    <label for="title">标题:</label>
+                    <input type="text" class="form-control" th:value="${title}" id="title" name="title"
+                           placeholder="请填写标题:"
+                           autocomplete="off">
+                </div>
+                <div class="form-group" id="question-editor">
+                    <label for="content">内容:</label>
+                    <textarea name="content" th:text="${content}" id="content" style="resize:none;"
+                              placeholder="编辑内容"
+                              class="form-control"
+                              cols="30"
+                              rows="10"></textarea>
+                </div>
+                <div class="container-fluid main ">
+                    <div class="row">
+                        <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12">
+                            <div class="alert alert-danger col-lg-12 col-md-12 col-sm-12 col-xs-12"
+                                 th:text="${error}"
+                                 th:if="${error != null}">
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
+                            <button type="submit" class="btn btn-success btn-publish ">提交</button>
                         </div>
                     </div>
-                    <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
-                        <button type="submit" class="btn btn-success btn-publish ">提交</button>
-                    </div>
                 </div>
-            </div>
-        </form>
-    </div>
-    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-6">
-    </div>
+            </form>
+        </div>
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-6">
+        </div>
 </div>
 </body>
 </html>

@@ -47,11 +47,6 @@ public class PublishService {
         }
         articleDTO.setAuthor(author);
         BeanUtils.copyProperties(article, articleDTO);
-//        articleDTO.setTitle(article.getTitle());
-//        articleDTO.setContent(article.getContent());
-//        articleDTO.setPostTime(article.getPostTime());
-//        articleDTO.setCommentCount(article.getCommentCount());
-//        articleDTO.setViewCount(article.getViewCount());
         return  articleDTO;
     }
 }
