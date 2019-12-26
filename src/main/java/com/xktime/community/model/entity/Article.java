@@ -9,7 +9,7 @@ public class Article {
     private int id;
     private String title;
     private String content;
-    private String authorId;
+    private String authorAccountId;
     private int commentCount;
     private int viewCount;
     private Date postTime;
@@ -17,10 +17,10 @@ public class Article {
     public Article() {
     }
 
-    public Article(String title, String content, String authorId, Date postTime) {
+    public Article(String title, String content, String authorAccountId, Date postTime) {
         this.title = title;
         this.content = content;
-        this.authorId = authorId;
+        this.authorAccountId = authorAccountId;
         this.postTime = postTime;
     }
 }

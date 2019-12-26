@@ -13,29 +13,9 @@ public interface UserRepository {
     void updateUser(User user);
 
     @Select("SELECT * FROM user WHERE token = #{token}")
-    @Results ({
-            @Result(property = "id", column = "id"),
-            @Result(property = "name", column = "name"),
-            @Result(property = "accountId", column = "account_id"),
-            @Result(property = "bio", column = "bio"),
-            @Result(property = "login", column = "login"),
-            @Result(property = "token", column = "token"),
-            @Result(property = "loginTime", column = "login_time"),
-            @Result(property = "avatarUrl", column = "avatar_url"),
-    })
     User findByToken(@Param("token") String token);
 
     @Select("SELECT * FROM user WHERE account_id = #{accountId}")
-    @Results ({
-            @Result(property = "id", column = "id"),
-            @Result(property = "name", column = "name"),
-            @Result(property = "accountId", column = "account_id"),
-            @Result(property = "bio", column = "bio"),
-            @Result(property = "login", column = "login"),
-            @Result(property = "token", column = "token"),
-            @Result(property = "loginTime", column = "login_time"),
-            @Result(property = "avatarUrl", column = "avatar_url"),
-    })
     User findByAccountId(@Param("accountId")String accountId);
 
 }
