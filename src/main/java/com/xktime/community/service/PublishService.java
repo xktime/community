@@ -41,7 +41,7 @@ public class PublishService {
 
     private ArticleDTO transferArticleToArticleDTO(Article article) {
         ArticleDTO articleDTO = new ArticleDTO();
-        User author = userService.findByAccountId(article.getAuthorId());
+        User author = userService.findByAccountId(article.getAuthorAccountId());
         if (author == null) {
             throw new NullPointerException("未找到User");
         }
