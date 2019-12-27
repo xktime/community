@@ -35,7 +35,7 @@ public class IndexController {
                 request.getSession().setAttribute("user", user);
             }
         }
-        List<ArticleDTO> articleDTOList = articleService.getArticleDTOList();
+        List<ArticleDTO> articleDTOList = articleService.getArticleDTOListByPage(page);
         model.addAttribute("articles", articleDTOList);
         return "index";
     }

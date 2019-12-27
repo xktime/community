@@ -14,6 +14,8 @@ import java.util.List;
 @Service
 public class ArticleService {
 
+    private final static int PAGE_SHOW_NUM = 2;//每页显示多少条帖子
+
     @Autowired
     private ArticleRepository articleRepository;
 
@@ -28,15 +30,13 @@ public class ArticleService {
         return articleRepository.getArticles();
     }
 
-    public List<ArticleDTO> getArticleDTOList() {
-        List<Article> articleList = getArticleList();
-        List<ArticleDTO> articleDTOList = new ArrayList<>();
-        if (articleList != null && !articleList.isEmpty()) {
-            for (Article article : articleList) {
-                articleDTOList.add(transferArticleToArticleDTO(article));
-            }
+    public List<ArticleDTO> getArticleDTOListByPage(int page) {
+        if (page < 1) {
+            throw new IllegalArgumentException("page不能小于1");
         }
-        return articleDTOList;
+        int pageTopIndex = (page - 1) * PAGE_SHOW_NUM;
+        List<Article> articleList = articleRepository.getArticlesByPage(pageTopIndex, PAGE_SHOW_NUM);
+        return transferArticleListToArticleDTOList(articleList);
     }
 
     private ArticleDTO transferArticleToArticleDTO(Article article) {
@@ -48,5 +48,15 @@ public class ArticleService {
         articleDTO.setAuthor(author);
         BeanUtils.copyProperties(article, articleDTO);
         return  articleDTO;
+    }
+
+    private List<ArticleDTO> transferArticleListToArticleDTOList(List<Article> articles) {
+        List<ArticleDTO> articleDTOList = new ArrayList<>();
+        if (articles != null && !articles.isEmpty()) {
+            for (Article article : articles) {
+                articleDTOList.add(transferArticleToArticleDTO(article));
+            }
+        }
+        return articleDTOList;
     }
 }
