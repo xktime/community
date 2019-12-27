@@ -2,7 +2,7 @@ package com.xktime.community.controller;
 
 import com.xktime.community.model.entity.Article;
 import com.xktime.community.model.entity.User;
-import com.xktime.community.service.PublishService;
+import com.xktime.community.service.ArticleService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -19,7 +19,7 @@ import java.util.Date;
 public class PublishController {
 
     @Autowired
-    PublishService publishService;
+    ArticleService articleService;
     @GetMapping("/")
     public String publish() {
         return "publish";
@@ -46,7 +46,7 @@ public class PublishController {
             return "publish";
         }
         Article article = new Article(title, content, user.getAccountId(), new Date());
-        publishService.saveArticle(article);
+        articleService.saveArticle(article);
         return "redirect:/";
     }
 }
