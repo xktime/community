@@ -4,6 +4,7 @@ import com.xktime.community.model.dto.ArticleDTO;
 import com.xktime.community.model.entity.User;
 import com.xktime.community.service.CookieService;
 import com.xktime.community.service.ArticleService;
+import com.xktime.community.service.PaginationService;
 import com.xktime.community.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -22,7 +23,7 @@ public class IndexController {
     @Autowired
     private CookieService cookieService;
     @Autowired
-    private ArticleService articleService;
+    private PaginationService paginationService;
 
     @GetMapping("/")
     public String index(HttpServletRequest request,
@@ -35,7 +36,7 @@ public class IndexController {
                 request.getSession().setAttribute("user", user);
             }
         }
-        List<ArticleDTO> articleDTOList = articleService.getArticleDTOListByPage(page);
+        List<ArticleDTO> articleDTOList = paginationService.getArticleDTOListByPage(page);
         model.addAttribute("articles", articleDTOList);
         return "index";
     }

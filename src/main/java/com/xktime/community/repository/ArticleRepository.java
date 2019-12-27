@@ -12,10 +12,13 @@ public interface ArticleRepository {
             "VALUES (#{title},#{content},#{authorAccountId},#{postTime})")
     void saveArticle(Article article);
 
+    @Select("SELECT COUNT(*) FROM article")
+    int getCount();
+
     @Select("SELECT * FROM article")
     List<Article> getArticles();
 
     @Select("SELECT * FROM article LIMIT #{pageShowNum} OFFSET #{pageTopIndex}")
-    List<Article> getArticlesByPage(@Param("pageTopIndex")int pageTopIndex,
-                                    @Param("pageShowNum")int pageShowNum);
+    List<Article> getArticlesByPage(@Param("pageTopIndex") int pageTopIndex,
+                                    @Param("pageShowNum") int pageShowNum);
 }
