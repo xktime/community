@@ -11,7 +11,7 @@
 </head>
 <body>
     <nav class="navbar navbar-default">
-    <div class="container-fluid">
+        <div class="container-fluid">
         <div class="navbar-header">
             <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
                     data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
@@ -49,7 +49,7 @@
             </ul>
         </div>
     </div>
-</nav>
+    </nav>
     <div class="container-fluid main">
         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-6">
             <h3><span class="glyphicon glyphicon-list" aria-hidden="true"></span> 发现</h3>
@@ -73,5 +73,37 @@
         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-6">
         </div>
 </div>
+    <nav class="side" aria-label="Page navigation">
+        <ul class="pagination">
+            <li th:if="${pagination.isShowFirstButton()}">
+                <a th:href="@{/(page=1)}" aria-label="Previous">
+                    <span aria-hidden="true">&lt;&lt;</span>
+                </a>
+            </li>
+            <li th:if="${pagination.isShowPreviousButton()}">
+                <a th:href="@{/(page=${pagination.getPageNum() - 1})}"
+                   aria-label="Previous">
+                    <span aria-hidden="true">&lt;</span>
+                </a>
+            </li>
+
+            <li th:each="page : ${#numbers.sequence(pagination.getFirstPageNum(), pagination.getLastPageNum())}" th:class="${pagination.getPageNum() == page}? 'active' : ''">
+                <a th:href="@{/(page=${page})}" th:text="${page}"></a>
+            </li>
+
+            <li th:if="${pagination.isShowNextButton()}">
+                <a th:href="@{/(page=${pagination.getPageNum() +1 })}"
+                   aria-label="Previous">
+                    <span aria-hidden="true">&gt;</span>
+                </a>
+            </li>
+            <li th:if="${pagination.isShowLastButton()}">
+                <a th:href="@{/(page=${pagination.getPageCount()})}"
+                   aria-label="Previous">
+                    <span aria-hidden="true">&gt;&gt;</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
 </body>
 </html>

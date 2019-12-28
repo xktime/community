@@ -38,6 +38,7 @@ public class IndexController {
         }
         List<ArticleDTO> articleDTOList = paginationService.getArticleDTOListByPage(page);
         model.addAttribute("articles", articleDTOList);
+        model.addAttribute("pagination", paginationService.getPaginationDTOByPage(page));
         return "index";
     }
 
