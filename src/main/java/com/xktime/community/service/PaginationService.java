@@ -12,7 +12,7 @@ import java.util.List;
 @Service
 public class PaginationService {
 
-    private final static int PAGE_SHOW_NUM = 20;//每页显示多少条帖子
+    private final static int PAGE_SHOW_NUM = 10;//每页显示多少条帖子
     private final static int PAGE_NUMBER_NUM = 5;//显示页码按钮个数
     @Autowired
     ArticleRepository articleRepository;

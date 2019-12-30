@@ -2,6 +2,7 @@ package com.xktime.community.service;
 
 import com.xktime.community.model.entity.User;
 import com.xktime.community.repository.UserRepository;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,12 +14,15 @@ public class UserService {
     @Autowired
     private UserRepository userRepository;
 
-    public void saveUser(User user) {
+    public synchronized void saveUser(User user) {
         if (user == null) {
             throw new NullPointerException("User不能为空");
         }
-        if (user.getAccountId() == null) {
+        if (StringUtils.isBlank(user.getAccountId())) {
             throw new NullPointerException("User请求数据错误");
+        }
+        if (findByToken(user.getToken()) != null) {
+            throw new IllegalArgumentException("token重复");
         }
         if (findByAccountId(user.getAccountId()) == null) {
             userRepository.saveUser(user);
