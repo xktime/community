@@ -19,6 +19,6 @@ public interface ArticleRepository {
     List<Article> getArticles();
 
     @Select("SELECT * FROM article LIMIT #{pageShowNum} OFFSET #{pageTopIndex}")
-    List<Article> getArticlesByPage(@Param("pageTopIndex") int pageTopIndex,
-                                    @Param("pageShowNum") int pageShowNum);
+    List<Article> getArticleListByPage(@Param("pageTopIndex") int pageTopIndex,
+                                       @Param("pageShowNum") int pageShowNum);
 }

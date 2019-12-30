@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -28,17 +29,29 @@ public class ArticleService {
         return articleRepository.getArticles();
     }
 
+    /**
+     *  把后端数据转换成前端显示数据类型
+     */
     public ArticleDTO transferArticleToArticleDTO(Article article) {
         ArticleDTO articleDTO = new ArticleDTO();
         User author = userService.findByAccountId(article.getAuthorAccountId());
         if (author == null) {
-            throw new NullPointerException("未找到User");
+            //获得注销用户信息来显示
+            author = userService.getCanceledUser();
         }
         articleDTO.setAuthor(author);
         BeanUtils.copyProperties(article, articleDTO);
+        if (articleDTO.getPostTime() == null) {
+            //如果日期为空,默认时间为1970年
+            long time = 0L;
+            articleDTO.setPostTime(new Date(time));
+        }
         return articleDTO;
     }
 
+    /**
+     *  把后端数据转换成前端显示数据类型
+     */
     public List<ArticleDTO> transferArticleListToArticleDTOList(List<Article> articles) {
         List<ArticleDTO> articleDTOList = new ArrayList<>();
         if (articles != null && !articles.isEmpty()) {

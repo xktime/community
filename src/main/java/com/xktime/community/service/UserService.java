@@ -7,6 +7,9 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class UserService {
+
+    private static final Object LOCK_ME_OBJ = new Object();
+
     @Autowired
     private UserRepository userRepository;
 
@@ -32,7 +35,31 @@ public class UserService {
         return userRepository.findByAccountId(accountId);
     }
 
+    public User getCanceledUser() {
+        User user = createCanceledUser();
+        if (findByAccountId(user.getAccountId()) == null) {
+            synchronized (LOCK_ME_OBJ) {
+                if (findByAccountId(user.getAccountId()) == null) {
+                    //如果没有，放进数据库就放进数据库
+                    saveUser(user);
+                }
+            }
+        }
+        return user;
+    }
+
     public void update(User user) {
         userRepository.updateUser(user);
+    }
+
+    /**
+     * 创建一个注销账户
+     */
+    private User createCanceledUser() {
+        User user = new User();
+        user.setAvatarUrl("https://avatars2.githubusercontent.com/u/10693199?v=4");
+        user.setName("已注销");
+        user.setAccountId("0");
+        return user;
     }
 }
