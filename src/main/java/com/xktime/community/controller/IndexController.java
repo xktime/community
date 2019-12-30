@@ -36,8 +36,10 @@ public class IndexController {
                 request.getSession().setAttribute("user", user);
             }
         }
+        //帖子数据
         List<ArticleDTO> articleDTOList = paginationService.getArticleDTOListByPage(page);
         model.addAttribute("articles", articleDTOList);
+        //分页数据
         model.addAttribute("pagination", paginationService.getPaginationDTOByPage(page));
         return "index";
     }

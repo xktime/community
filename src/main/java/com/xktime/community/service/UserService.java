@@ -13,12 +13,15 @@ public class UserService {
     @Autowired
     private UserRepository userRepository;
 
-    public void saveUser(User user) {
+    public synchronized void saveUser(User user) {
         if (user == null) {
             throw new NullPointerException("User不能为空");
         }
         if (user.getAccountId() == null) {
             throw new NullPointerException("User请求数据错误");
+        }
+        if (findByToken(user.getToken()) != null) {
+            throw new IllegalArgumentException("token重复");
         }
         if (findByAccountId(user.getAccountId()) == null) {
             userRepository.saveUser(user);
