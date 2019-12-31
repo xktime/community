@@ -31,6 +31,7 @@ public class IndexController {
                         @RequestParam(name = "page", defaultValue = "1") int page) {
         String token = cookieService.getToken(request.getCookies());
         if (token != null) {
+            //登陆缓存
             User user = userService.findByToken(token);
             if (user != null) {
                 request.getSession().setAttribute("user", user);

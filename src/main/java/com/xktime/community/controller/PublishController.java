@@ -45,6 +45,7 @@ public class PublishController {
             model.addAttribute("error", "内容不能为空");
             return "publish";
         }
+        //创建Article对象,保存进数据库
         Article article = new Article(title, content, user.getAccountId(), new Date());
         articleService.saveArticle(article);
         return "redirect:/";

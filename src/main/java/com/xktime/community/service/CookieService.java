@@ -6,6 +6,10 @@ import javax.servlet.http.Cookie;
 
 @Service
 public class CookieService {
+
+    /**
+     *  获取cookie中的token
+     */
     public String getToken(Cookie[] cookies) {
         if (cookies == null) {
             return null;

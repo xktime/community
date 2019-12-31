@@ -21,19 +21,20 @@ public class PaginationService {
     ArticleService articleService;
 
     /**
-     *  获取该页的所有帖子
+     * 获取该页的所有帖子
      */
     public List<ArticleDTO> getArticleDTOListByPage(int page) {
         page = page < 1 ? 1 : page;
         int lastPage = getPageCount();
         page = page > lastPage ? lastPage : page;
-        int pageTopIndex = (page - 1) * PAGE_SHOW_NUM;
-        List<Article> articleList = articleRepository.getArticleListByPage(pageTopIndex, PAGE_SHOW_NUM);
-        return articleService.transferArticleListToArticleDTOList(articleList);
+        int pageStartIndex = (page - 1) * PAGE_SHOW_NUM;//页面第一个帖子,在数据库的索引
+        //获取当前页面所要显示的所有帖子
+        List<Article> articleList = articleRepository.getArticleListByPage(pageStartIndex, PAGE_SHOW_NUM);
+        return articleService.transferArticleListToArticleDTOList(articleList);//将帖子数据转换成前端所需要的数据格式
     }
 
     /**
-     *  获取该页的前端数据
+     * 获取该页的前端数据
      */
     public PaginationDTO getPaginationDTOByPage(int page) {
         PaginationDTO pagination = new PaginationDTO();

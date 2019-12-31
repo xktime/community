@@ -14,6 +14,10 @@ public class UserService {
     @Autowired
     private UserRepository userRepository;
 
+    /**
+     * 将用户数据保存进数据库
+     * 如果已有用户就更新数据
+     */
     public synchronized void saveUser(User user) {
         if (user == null) {
             throw new NullPointerException("User不能为空");
@@ -39,6 +43,9 @@ public class UserService {
         return userRepository.findByAccountId(accountId);
     }
 
+    /**
+     * 获得一个已注销的账户,并将其放入用户数据库中（似乎没什么必要放）
+     */
     public User getCanceledUser() {
         User user = createCanceledUser();
         if (findByAccountId(user.getAccountId()) == null) {

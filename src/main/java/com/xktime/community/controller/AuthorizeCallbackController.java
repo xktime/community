@@ -25,8 +25,10 @@ public class AuthorizeCallbackController {
     public String github(@RequestParam(name = "code") String code,
                          @RequestParam(name = "state") String state,
                          HttpServletResponse response) {
+        //根据传入的code和state从获取github的用户数据
         User user = githubService.getUser(code, state);
         if (user != null) {
+            //如果取到用户数据，保存用户数据，并更新token
             userService.saveUser(user);
             Cookie cookie = new Cookie("token", user.getToken());
             cookie.setPath("/");
