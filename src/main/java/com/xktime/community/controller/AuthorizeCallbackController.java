@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 @Controller
@@ -24,10 +25,11 @@ public class AuthorizeCallbackController {
     @GetMapping("github")
     public String github(@RequestParam(name = "code") String code,
                          @RequestParam(name = "state") String state,
-                         HttpServletResponse response) {
+                         HttpServletResponse response,
+                         HttpServletRequest request) {
         //根据传入的code和state从获取github的用户数据
         User user = githubService.getUser(code, state);
-        if (user != null) {
+        if (user != null && user.getAccountId() != null) {
             //如果取到用户数据，保存用户数据，并更新token
             userService.saveUser(user);
             Cookie cookie = new Cookie("token", user.getToken());
