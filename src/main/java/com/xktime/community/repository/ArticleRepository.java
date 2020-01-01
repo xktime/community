@@ -21,4 +21,7 @@ public interface ArticleRepository {
     @Select("SELECT * FROM article LIMIT #{pageShowNum} OFFSET #{pageStartIndex}")
     List<Article> getArticleListByPage(@Param("pageStartIndex") int pageStartIndex,
                                        @Param("pageShowNum") int pageShowNum);
+
+    @Select("SELECT * FROM article WHERE author_account_id = #{accountId}")
+    List<Article> getArticlesByAccountId(@Param("accountId")String accountId);
 }

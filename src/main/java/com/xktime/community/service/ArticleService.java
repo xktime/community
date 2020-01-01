@@ -29,6 +29,10 @@ public class ArticleService {
         return articleRepository.getArticles();
     }
 
+    public List<Article> getArticleListByAccountId(String accountId) {
+        return articleRepository.getArticlesByAccountId(accountId);
+    }
+
     /**
      *  把后端数据转换成前端显示数据类型
      */
