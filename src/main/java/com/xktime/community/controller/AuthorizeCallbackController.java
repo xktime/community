@@ -25,8 +25,7 @@ public class AuthorizeCallbackController {
     @GetMapping("github")
     public String github(@RequestParam(name = "code") String code,
                          @RequestParam(name = "state") String state,
-                         HttpServletResponse response,
-                         HttpServletRequest request) {
+                         HttpServletResponse response) {
         //根据传入的code和state从获取github的用户数据
         User user = githubService.getUser(code, state);
         if (user != null && user.getAccountId() != null) {
