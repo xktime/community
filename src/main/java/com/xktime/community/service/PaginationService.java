@@ -37,8 +37,8 @@ public class PaginationService {
         int pageStartIndex = (page - 1) * PAGE_SHOW_NUM;//页面第一个帖子,在数据库的索引
         //获取当前页面所要显示的所有帖子
         List<Article> articleList;
-        //如果accountId为空返回该页所有帖子，否则返回用户的该页帖子
         if (accountId != null) {
+            //如果accountId为空返回该页所有帖子，否则返回用户的该页帖子
             articleList = articleRepository.getUsersArticleListByPage(pageStartIndex, PAGE_SHOW_NUM, accountId);
         } else {
            articleList = articleRepository.getArticleListByPage(pageStartIndex, PAGE_SHOW_NUM);
