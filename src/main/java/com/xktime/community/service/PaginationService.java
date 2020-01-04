@@ -24,22 +24,45 @@ public class PaginationService {
      * 获取该页的所有帖子
      */
     public List<ArticleDTO> getArticleDTOListByPage(int page) {
-        page = page < 1 ? 1 : page;
-        int lastPage = getPageCount();
-        page = page > lastPage ? lastPage : page;
-        int pageStartIndex = (page - 1) * PAGE_SHOW_NUM;//页面第一个帖子,在数据库的索引
-        //获取当前页面所要显示的所有帖子
-        List<Article> articleList = articleRepository.getArticleListByPage(pageStartIndex, PAGE_SHOW_NUM);
-        return articleService.transferArticleListToArticleDTOList(articleList);//将帖子数据转换成前端所需要的数据格式
+        return getArticleDTOListByPage(page, null);
     }
 
     /**
-     * 获取该页的前端数据
+     * 获取用户该页的所有帖子
+     */
+    public List<ArticleDTO> getArticleDTOListByPage(int page, String accountId) {
+        page = page < 1 ? 1 : page;
+        int lastPage = getPageCount(accountId);
+        page = page > lastPage ? lastPage : page;
+        int pageStartIndex = (page - 1) * PAGE_SHOW_NUM;//页面第一个帖子,在数据库的索引
+        //获取当前页面所要显示的所有帖子
+        List<Article> articleList;
+        //如果accountId为空返回该页所有帖子，否则返回用户的该页帖子
+        if (accountId != null) {
+            articleList = articleRepository.getUsersArticleListByPage(pageStartIndex, PAGE_SHOW_NUM, accountId);
+        } else {
+           articleList = articleRepository.getArticleListByPage(pageStartIndex, PAGE_SHOW_NUM);
+        }
+        return articleService.transferArticleListToArticleDTOList(articleList);
+    }
+
+    /**
+     * 获取该页的分页数据
      */
     public PaginationDTO getPaginationDTOByPage(int page) {
+        return getPaginationDTOByPage(page, null);
+    }
+
+    /**
+     *  获取用户帖子的分页数据
+     * @param page
+     * @param accountId 如果accountId==0 表示所有的帖子。
+     * @return
+     */
+    public PaginationDTO getPaginationDTOByPage(int page, String accountId) {
         PaginationDTO pagination = new PaginationDTO();
         pagination.setPageNum(page);
-        int pageCount = getPageCount();
+        int pageCount = getPageCount(accountId);
         pagination.setPageCount(pageCount);
         //显示的第一个页码
         int firstPageNum = page - PAGE_NUMBER_NUM / 2;
@@ -72,7 +95,21 @@ public class PaginationService {
      * 获取总页数
      */
     public int getPageCount() {
-        double articleCount = articleRepository.getCount();
+        return getPageCount(null);
+    }
+
+    /**
+     * 如果accountId为空获取所有帖子的总页数，否则获取用户帖子的总页数
+     * @param accountId
+     * @return
+     */
+    public int getPageCount(String accountId) {
+        double articleCount;
+        if (accountId == null) {
+            articleCount = articleRepository.getCount();
+        } else {
+            articleCount = articleRepository.getUsersArticleCount(accountId);
+        }
         return (int) Math.ceil(articleCount / PAGE_SHOW_NUM);
     }
 }
