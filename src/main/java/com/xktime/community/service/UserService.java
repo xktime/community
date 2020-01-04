@@ -1,8 +1,10 @@
 package com.xktime.community.service;
 
+import com.xktime.community.model.dto.UserDTO;
 import com.xktime.community.model.entity.User;
 import com.xktime.community.repository.UserRepository;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -43,6 +45,11 @@ public class UserService {
         return userRepository.findByAccountId(accountId);
     }
 
+    public UserDTO transferUserToUserDTO(User user) {
+        UserDTO userDTO = new UserDTO();
+        BeanUtils.copyProperties(user, userDTO);
+        return userDTO;
+    }
     /**
      * 获得一个已注销的账户,并将其放入用户数据库中（似乎没什么必要放）
      */
