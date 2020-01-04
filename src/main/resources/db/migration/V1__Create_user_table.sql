@@ -11,4 +11,5 @@ CREATE TABLE user
 );
 CREATE UNIQUE INDEX user_id_uindex ON user (id);
 CREATE UNIQUE INDEX user_account_id_uindex ON user (account_id);
+CREATE UNIQUE INDEX user_token_uindex ON user (token);
 

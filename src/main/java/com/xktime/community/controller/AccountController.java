@@ -26,7 +26,6 @@ public class AccountController {
     public String myArticle(HttpServletRequest request,
                             Model model,
                             @RequestParam(name = "page", defaultValue = "1") int page) {
-        model.addAttribute("title", "我的帖子");
         Object object = request.getSession().getAttribute("user");
         if (object instanceof User) {
             User user = (User)object;
