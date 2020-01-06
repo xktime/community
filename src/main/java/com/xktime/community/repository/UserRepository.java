@@ -9,7 +9,8 @@ public interface UserRepository {
             "VALUES (#{name},#{accountId},#{bio},#{login},#{token},#{loginTime},#{avatarUrl})")
     void saveUser(User user);
 
-    @Update("UPDATE user SET token = #{token}, login_time = #{loginTime}, bio = #{bio}, name = #{name}, avatar_url = #{avatarUrl}")
+    @Update("UPDATE user SET token = #{token}, login_time = #{loginTime}, bio = #{bio}, name = #{name}, avatar_url = #{avatarUrl}" +
+            "WHERE account_id = #{accountId}")
     void updateUser(User user);
 
     @Select("SELECT * FROM user WHERE token = #{token}")
