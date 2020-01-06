@@ -1,7 +1,9 @@
 package com.xktime.community.controller;
 
 import com.xktime.community.model.dto.ArticleDTO;
+import com.xktime.community.model.entity.Article;
 import com.xktime.community.model.entity.User;
+import com.xktime.community.service.ArticleService;
 import com.xktime.community.service.PaginationService;
 import com.xktime.community.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +24,8 @@ public class AccountController {
     public PaginationService paginationService;
     @Autowired
     public UserService userService;
+    @Autowired
+    public ArticleService articleService;
 
     @GetMapping("article")
     public String myArticle(HttpServletRequest request,
@@ -42,10 +46,17 @@ public class AccountController {
 
     @GetMapping("profile")
     public String profile(@RequestParam(name = "id") String accountId,
-                          Model model) {
+                          Model model,
+                          @RequestParam(name = "page", defaultValue = "1") int page) {
         User user = userService.findByAccountId(accountId);
         if (user != null) {
             model.addAttribute("user", userService.transferUserToUserDTO(user));
+            model.addAttribute("title", "TA的帖子");
+            //帖子数据
+            List<ArticleDTO> articleDTOList = paginationService.getArticleDTOListByPage(page, user.getAccountId());
+            model.addAttribute("articles", articleDTOList);
+            //分页数据
+            model.addAttribute("pagination", paginationService.getPaginationDTOByPage(page, user.getAccountId()));
         }
         return "profile";
     }

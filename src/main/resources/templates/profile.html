@@ -13,11 +13,53 @@
     <div th:insert="~{header :: header}"></div>
     <div class="container-fluid main">
         <div class="row">
-            <div class="thumbnail">
-                <img th:src="${user.getAvatarUrl()}" alt="用户头像" class="img-circle">
+            <div class="col-xs-2 col-md-2">
+                <div class="thumbnail profile-photo">
+                    <img th:src="${user.getAvatarUrl()}" alt="用户头像" class="img-circle">
+                </div>
+            </div>
+            <div class="col-xs-10 col-md-10">
+                <p th:text="'用户ID:'+ ${user.getAccountId()}" style="font-size: 24px;font-weight:bold"></p>
+                <p th:text="'用户名:' + ${user.getName()}"></p>
+                <p th:text="'个人介绍:' + ${user.getBio() == null ? '无' : user.getBio()}"></p>
+                <p th:text="'上次登录时间:' + ${#dates.format(user.getLoginTime(),'yyyy-MM-dd HH:mm')}"></p>
             </div>
         </div>
     </div>
+    <div th:insert="~{articles :: articles}"></div>
+    <nav class="side" aria-label="Page navigation" th:if="${pagination != null}">
+        <ul class="pagination">
+            <li th:if="${pagination.isShowFirstButton()}">
+                <a th:href="@{/account/profile(page=1,id=${user.getAccountId()})}" aria-label="Previous">
+                    <span aria-hidden="true">&lt;&lt;</span>
+                </a>
+            </li>
+            <li th:if="${pagination.isShowPreviousButton()}">
+                <a th:href="@{/account/profile(page=${pagination.getPageNum() - 1},id=${user.getAccountId()})}"
+                   aria-label="Previous">
+                    <span aria-hidden="true">&lt;</span>
+                </a>
+            </li>
+
+            <li th:each="page : ${#numbers.sequence(pagination.getFirstPageNum(), pagination.getLastPageNum())}"
+                th:class="${pagination.getPageNum() == page}? 'active' : ''">
+                <a th:href="@{/account/profile(page=${page},id=${user.getAccountId()})}" th:text="${page}"></a>
+            </li>
+
+            <li th:if="${pagination.isShowNextButton()}">
+                <a th:href="@{/account/profile(page=${pagination.getPageNum() +1 },id=${user.getAccountId()})}"
+                   aria-label="Previous">
+                    <span aria-hidden="true">&gt;</span>
+                </a>
+            </li>
+            <li th:if="${pagination.isShowLastButton()}">
+                <a th:href="@{/account/profile(page=${pagination.getPageCount()},id=${user.getAccountId()})}"
+                   aria-label="Previous">
+                    <span aria-hidden="true">&gt;&gt;</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
 </div>
 </body>
 </html>

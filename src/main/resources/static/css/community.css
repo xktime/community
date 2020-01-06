@@ -160,6 +160,11 @@ body {
     color: #499ef3;
 }
 
+.profile-photo {
+    width: 150px;
+    height: 150px;
+}
+
 .footer {
     text-align: center;
     font-size: 12px;

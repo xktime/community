@@ -6,7 +6,7 @@ import java.util.Date;
 
 @Data
 public class UserDTO {
-    private int id;
+    private String accountId;
     private String name;
     private String bio;
     private String login;
