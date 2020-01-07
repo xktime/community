@@ -16,7 +16,7 @@ public interface ArticleRepository {
     int getCount();
 
     @Select("SELECT COUNT(*) FROM article WHERE author_account_id = #{accountId}")
-    int getUsersArticleCount(@Param("accountId")String accountId);
+    int getUsersArticleCount(@Param("accountId") String accountId);
 
     @Select("SELECT * FROM article ORDER BY post_time DESC")
     List<Article> getArticles();
@@ -31,9 +31,9 @@ public interface ArticleRepository {
             "ORDER BY post_time DESC " +
             "LIMIT #{pageShowNum} OFFSET #{pageStartIndex}")
     List<Article> getUsersArticleListByPage(@Param("pageStartIndex") int pageStartIndex,
-                                       @Param("pageShowNum") int pageShowNum,
-                                       @Param("accountId")String accountId);
+                                            @Param("pageShowNum") int pageShowNum,
+                                            @Param("accountId") String accountId);
 
     @Select("SELECT * FROM article WHERE author_account_id = #{accountId} ORDER BY post_time DESC")
-    List<Article> getArticlesByAccountId(@Param("accountId")String accountId);
+    List<Article> getArticlesByAccountId(@Param("accountId") String accountId);
 }

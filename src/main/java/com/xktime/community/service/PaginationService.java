@@ -32,7 +32,10 @@ public class PaginationService {
      */
     public List<ArticleDTO> getArticleDTOListByPage(int page, String accountId) {
         page = page < 1 ? 1 : page;
-        int lastPage = getPageCount(accountId);
+        //总页数
+        int pageCount = getPageCount(accountId);
+        pageCount = pageCount == 0 ? 1 : pageCount;
+        int lastPage = pageCount;//最后一页为总页数
         page = page > lastPage ? lastPage : page;
         int pageStartIndex = (page - 1) * PAGE_SHOW_NUM;//页面第一个帖子,在数据库的索引
         //获取当前页面所要显示的所有帖子
@@ -63,6 +66,7 @@ public class PaginationService {
         PaginationDTO pagination = new PaginationDTO();
         pagination.setPageNum(page);
         int pageCount = getPageCount(accountId);
+        pageCount = pageCount == 0 ? 1 : pageCount;
         pagination.setPageCount(pageCount);
         //显示的第一个页码
         int firstPageNum = page - PAGE_NUMBER_NUM / 2;

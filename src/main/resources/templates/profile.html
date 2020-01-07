@@ -27,7 +27,7 @@
         </div>
     </div>
     <div th:insert="~{articles :: articles}"></div>
-    <nav class="side" aria-label="Page navigation" th:if="${pagination != null}">
+    <nav class="side" aria-label="Page navigation" th:if="${pagination != null  && pagination.getLastPageNum() != 1}">
         <ul class="pagination">
             <li th:if="${pagination.isShowFirstButton()}">
                 <a th:href="@{/account/profile(page=1,id=${user.getAccountId()})}" aria-label="Previous">

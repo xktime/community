@@ -46,10 +46,16 @@ public class AccountController {
 
     @GetMapping("profile")
     public String profile(@RequestParam(name = "id") String accountId,
+                          @RequestParam(name = "page", defaultValue = "1") int page,
                           Model model,
-                          @RequestParam(name = "page", defaultValue = "1") int page) {
+                          HttpServletRequest request) {
         User user = userService.findByAccountId(accountId);
         if (user != null) {
+            Object object = request.getSession().getAttribute("user");
+            //如果用户是自己，跳转到我的帖子的页面
+            if (object instanceof User && user.equals(object)) {
+                return "redirect:/account/article";
+            }
             model.addAttribute("user", userService.transferUserToUserDTO(user));
             model.addAttribute("title", "TA的帖子");
             //帖子数据
