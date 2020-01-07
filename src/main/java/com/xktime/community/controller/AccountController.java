@@ -1,7 +1,6 @@
 package com.xktime.community.controller;
 
 import com.xktime.community.model.dto.ArticleDTO;
-import com.xktime.community.model.entity.Article;
 import com.xktime.community.model.entity.User;
 import com.xktime.community.service.ArticleService;
 import com.xktime.community.service.PaginationService;
@@ -52,12 +51,15 @@ public class AccountController {
         User user = userService.findByAccountId(accountId);
         if (user != null) {
             Object object = request.getSession().getAttribute("user");
-            //如果用户是自己，跳转到我的帖子的页面
+            //如果用户是自己，跳转到我的资料的页面
             if (object instanceof User && user.equals(object)) {
-                return "redirect:/account/article";
+//                return "redirect:/account/article";
+                model.addAttribute("title", "我的帖子");
+            } else {
+                model.addAttribute("title", "TA的帖子");
             }
             model.addAttribute("user", userService.transferUserToUserDTO(user));
-            model.addAttribute("title", "TA的帖子");
+
             //帖子数据
             List<ArticleDTO> articleDTOList = paginationService.getArticleDTOListByPage(page, user.getAccountId());
             model.addAttribute("articles", articleDTOList);
