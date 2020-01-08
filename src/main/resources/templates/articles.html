@@ -14,7 +14,7 @@
                         </div>
                         <div class="media-body">
                             <h4 class="media-heading">
-                                <a href="#" th:text="${article.getTitle()}"></a>
+                                <a th:href="@{/article/(id= ${article.getId()})}" th:text="${article.getTitle()}"></a>
                             </h4>
                             <span class="text-desc"><span th:text="${article.getCommentCount()}"></span> 个回复 •
                         <span th:text="${article.getViewCount()}"></span> 次浏览 •

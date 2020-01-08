@@ -58,7 +58,7 @@ public class UserService {
         if (findByAccountId(user.getAccountId()) == null) {
             synchronized (LOCK_ME_OBJ) {
                 if (findByAccountId(user.getAccountId()) == null) {
-                    //如果没有，放进数据库就放进数据库
+                    //如果没有，就放进数据库
                     saveUser(user);
                 }
             }

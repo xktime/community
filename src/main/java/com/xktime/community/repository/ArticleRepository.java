@@ -18,6 +18,9 @@ public interface ArticleRepository {
     @Select("SELECT COUNT(*) FROM article WHERE author_account_id = #{accountId}")
     int getUsersArticleCount(@Param("accountId") String accountId);
 
+    @Select("SELECT * FROM article WHERE id = #{id}")
+    Article getArticleById(@Param("id")int id);
+
     @Select("SELECT * FROM article ORDER BY post_time DESC")
     List<Article> getArticles();
 
@@ -36,4 +39,5 @@ public interface ArticleRepository {
 
     @Select("SELECT * FROM article WHERE author_account_id = #{accountId} ORDER BY post_time DESC")
     List<Article> getArticlesByAccountId(@Param("accountId") String accountId);
+
 }

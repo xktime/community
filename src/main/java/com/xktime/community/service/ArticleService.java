@@ -33,6 +33,10 @@ public class ArticleService {
         return articleRepository.getArticlesByAccountId(accountId);
     }
 
+    public Article getArticleById(int id) {
+        return articleRepository.getArticleById(id);
+    }
+
     /**
      *  把后端数据转换成前端显示数据类型
      */

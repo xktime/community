@@ -7,6 +7,7 @@ import java.util.Date;
 
 @Data
 public class ArticleDTO {
+    private int id;
     private String title;
     private String content;
     private User author;

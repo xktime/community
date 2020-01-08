@@ -40,7 +40,7 @@ public class AccountController {
             //分页数据
             model.addAttribute("pagination", paginationService.getPaginationDTOByPage(page, user.getAccountId()));
         }
-        return "my-article";
+        return "my-articles";
     }
 
     @GetMapping("profile")

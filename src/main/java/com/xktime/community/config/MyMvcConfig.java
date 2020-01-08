@@ -10,6 +10,6 @@ public class MyMvcConfig implements WebMvcConfigurer {
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(new LoginHandlerInterceptor())
                 .addPathPatterns("/**")
-                .excludePathPatterns("/index.html","/callback/**","/","/login/**","/css/**","/js/**","/account/profile");
+                .excludePathPatterns("/index.html","/callback/**","/","/login/**","/css/**","/js/**","/account/profile","/article/**");
     }
 }
