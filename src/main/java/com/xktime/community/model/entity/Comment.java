@@ -10,4 +10,11 @@ public class Comment {
     private String authorAccountId;
     private String content;
     private Date postTime;
+
+    public Comment(int articleId, String authorAccountId, String content, Date postTime) {
+        this.articleId = articleId;
+        this.authorAccountId = authorAccountId;
+        this.content = content;
+        this.postTime = postTime;
+    }
 }
