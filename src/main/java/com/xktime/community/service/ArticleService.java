@@ -47,7 +47,7 @@ public class ArticleService {
             //获得注销用户信息来显示
             author = userService.getCanceledUser();
         }
-        articleDTO.setAuthor(author);
+        articleDTO.setAuthor(userService.transferUserToUserDTO(author));
         BeanUtils.copyProperties(article, articleDTO);
         if (articleDTO.getPostTime() == null) {
             //如果日期为空,默认时间为1970年

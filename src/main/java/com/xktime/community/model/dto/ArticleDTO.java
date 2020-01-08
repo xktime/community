@@ -10,7 +10,7 @@ public class ArticleDTO {
     private int id;
     private String title;
     private String content;
-    private User author;
+    private UserDTO author;
     private int commentCount;
     private int viewCount;
     private Date postTime;
