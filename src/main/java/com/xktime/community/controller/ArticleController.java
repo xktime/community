@@ -64,6 +64,6 @@ public class ArticleController {
         //创建Comment对象,保存进数据库
         Comment comment = new Comment(articleId, user.getAccountId(), content, new Date());
         commentService.saveComment(comment);
-        return "redirect:/";
+        return "redirect:/article/?id=" + articleId;
     }
 }

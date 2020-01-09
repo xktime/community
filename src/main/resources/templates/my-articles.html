@@ -12,7 +12,7 @@
 <body>
     <div th:insert="~{header :: header}"></div>
     <div th:insert="~{articles :: articles}"></div>
-    <nav class="side" aria-label="Page navigation" th:if="${pagination != null && pagination.getLastPageNum() != 1}">
+    <nav class="side" aria-label="Page navigation" th:if="${pagination != null}">
         <ul class="pagination">
             <li th:if="${pagination.isShowFirstButton()}">
                 <a th:href="@{/account/article(page=1)}" aria-label="Previous">
