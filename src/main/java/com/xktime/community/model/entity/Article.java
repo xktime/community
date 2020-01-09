@@ -10,7 +10,6 @@ public class Article {
     private String title;
     private String content;
     private String authorAccountId;
-    private int commentCount;
     private int viewCount;
     private Date postTime;
 

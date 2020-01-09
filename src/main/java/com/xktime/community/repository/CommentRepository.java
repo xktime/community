@@ -5,6 +5,7 @@ import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
@@ -20,4 +21,7 @@ public interface CommentRepository {
 
     @Select("SELECT * FROM comment WHERE author_account_id = #{accountId}")
     List<Comment> getCommentByAccountId(@Param("accountId") String accountId);
+
+    @Select("SELECT COUNT(*) FROM comment WHERE article_id = #{articleId}")
+    int getCommentCountByArticleId(@Param("articleId") int articleId);
 }

@@ -22,6 +22,9 @@ public class ArticleService {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private CommentService commentService;
+
     public void saveArticle(Article article) {
         articleRepository.saveArticle(article);
     }
@@ -32,6 +35,10 @@ public class ArticleService {
 
     public List<Article> getArticleListByAccountId(String accountId) {
         return articleRepository.getArticlesByAccountId(accountId);
+    }
+
+    public void incView(int articleId) {
+
     }
 
     public Article getArticleById(int id) {
@@ -50,6 +57,7 @@ public class ArticleService {
         }
         articleDTO.setAuthor(userService.transferUserToUserDTO(author));
         BeanUtils.copyProperties(article, articleDTO);
+        articleDTO.setCommentCount(commentService.getCommentCount(article.getId()));
         if (articleDTO.getPostTime() == null) {
             //如果日期为空,默认时间为1970年
             long time = 0L;

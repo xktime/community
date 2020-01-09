@@ -17,7 +17,7 @@ public class CommentService {
 
     @Autowired
     CommentRepository commentRepository;
-    
+
     @Autowired
     UserService userService;
 
@@ -31,6 +31,10 @@ public class CommentService {
 
     public List<Comment> getCommentByAccountId(String accountId) {
         return commentRepository.getCommentByAccountId(accountId);
+    }
+
+    public int getCommentCount(int articleId) {
+        return commentRepository.getCommentCountByArticleId(articleId);
     }
 
     public CommentDTO transferCommentToCommentDTO(@NonNull Comment comment) {
