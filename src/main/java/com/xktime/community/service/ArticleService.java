@@ -4,6 +4,7 @@ import com.xktime.community.model.dto.ArticleDTO;
 import com.xktime.community.model.entity.Article;
 import com.xktime.community.model.entity.User;
 import com.xktime.community.repository.ArticleRepository;
+import lombok.NonNull;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -40,7 +41,7 @@ public class ArticleService {
     /**
      *  把后端数据转换成前端显示数据类型
      */
-    public ArticleDTO transferArticleToArticleDTO(Article article) {
+    public ArticleDTO transferArticleToArticleDTO(@NonNull Article article) {
         ArticleDTO articleDTO = new ArticleDTO();
         User author = userService.findByAccountId(article.getAuthorAccountId());
         if (author == null) {

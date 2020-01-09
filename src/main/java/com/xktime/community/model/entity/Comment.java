@@ -6,10 +6,14 @@ import java.util.Date;
 
 @Data
 public class Comment {
+    private int id;
     private int articleId;
     private String authorAccountId;
     private String content;
     private Date postTime;
+
+    public Comment() {
+    }
 
     public Comment(int articleId, String authorAccountId, String content, Date postTime) {
         this.articleId = articleId;

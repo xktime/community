@@ -24,5 +24,49 @@
             </div>
         </div>
     </div>
+    <div class="container-fluid main">
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-6" style="height:750px">
+            <div class="media" th:each="comment : ${comments}">
+                <div class="media-left">
+                    <a th:href="@{/account/profile(id=${comment.getAuthor().getAccountId()})}">
+                        <img class="media-object img-rounded"
+                             th:src="${comment.getAuthor().getAvatarUrl()}">
+                    </a>
+                </div>
+                <div class="media-body">
+                    <p th:text="${comment.getContent()}"></p>
+                    <span th:text="${#dates.format(comment.getPostTime(),'yyyy-MM-dd HH:mm')}" ></span>
+                </div>
+            </div>
+        </div>
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-6">
+        </div>
+    </div>
+    <div class="container-fluid main">
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-6">
+            <form action="/article/comment" method="post">
+                <div class="form-group" id="question-editor">
+                    <label for="content">评论:</label>
+                    <textarea name="content" id="content" style="resize:none;"
+                              placeholder="编辑内容"
+                              class="form-control"
+                              cols="30"
+                              rows="10"></textarea>
+                    <input type="hidden" name="id" id="id" th:value="${article.getId()}">
+                </div>
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12">
+                        </div>
+                        <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
+                            <button type="submit" class="btn btn-success btn-publish ">提交</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-6">
+        </div>
+    </div>
 </body>
 </html>
