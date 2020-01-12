@@ -37,6 +37,12 @@ public class CommentService {
         return commentRepository.getCommentCountByArticleId(articleId);
     }
 
+
+    public List<CommentDTO> getCommentDTOList(int articleId) {
+        List<Comment> commentList = getCommentByArticleId(articleId);
+        return transferCommentListToCommentDTOList(commentList);
+    }
+
     public CommentDTO transferCommentToCommentDTO(@NonNull Comment comment) {
         CommentDTO commentDTO = new CommentDTO();
         User user = userService.findByAccountId(comment.getAuthorAccountId());

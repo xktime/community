@@ -40,4 +40,6 @@ public interface ArticleRepository {
     @Select("SELECT * FROM article WHERE author_account_id = #{accountId} ORDER BY post_time DESC")
     List<Article> getArticlesByAccountId(@Param("accountId") String accountId);
 
+    @Update("UPDATE article SET view_count = view_count + 1 WHERE id = #{id}")
+    void incView(@Param("id")int id);
 }

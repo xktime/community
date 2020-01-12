@@ -38,7 +38,7 @@ public class ArticleService {
     }
 
     public void incView(int articleId) {
-
+        articleRepository.incView(articleId);
     }
 
     public Article getArticleById(int id) {

@@ -32,11 +32,12 @@ public class ArticleController {
                           Model model) {
         Article article = articleService.getArticleById(articleId);
         if (article != null) {
+            //增加浏览量
+            articleService.incView(articleId);
             //帖子的信息
             model.addAttribute("article", articleService.transferArticleToArticleDTO(article));
             //所有评论
-            List<Comment> commentList = commentService.getCommentByArticleId(articleId);
-            model.addAttribute("comments", commentService.transferCommentListToCommentDTOList(commentList));
+            model.addAttribute("comments", commentService.getCommentDTOList(articleId));
         }
         return "article";
     }
