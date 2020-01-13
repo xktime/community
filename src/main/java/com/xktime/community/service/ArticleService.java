@@ -29,24 +29,44 @@ public class ArticleService {
         articleRepository.saveArticle(article);
     }
 
-    public List<Article> getArticleList() {
-        return articleRepository.getArticles();
+    public Article findById(int articleId) {
+        return articleRepository.findById(articleId);
     }
 
-    public List<Article> getArticleListByAccountId(String accountId) {
-        return articleRepository.getArticlesByAccountId(accountId);
+    public List<Article> findAll() {
+        return articleRepository.findAll();
+    }
+
+    public List<Article> findByAccountId(String accountId) {
+        return articleRepository.findByAccountId(accountId);
+    }
+
+    /**
+     * @param startIndex 从0开始
+     * @param num
+     * @return list[startIndex, startIndex+num-1]
+     */
+    public List<Article> findByOffset(int startIndex, int num) {
+        return articleRepository.findByOffset(startIndex, num);
+    }
+
+    /**
+     * @param startIndex 从0开始
+     * @param num
+     * @param accountId list[startIndex, startIndex+num-1]
+     * @return
+     */
+    public List<Article> findByOffsetAndAccountId(int startIndex, int num, String accountId) {
+        return articleRepository.findByOffsetAndAccountId(startIndex, num, accountId);
     }
 
     /**
      * 增加文章的浏览量
+     *
      * @param articleId
      */
     public void incView(int articleId) {
         articleRepository.incView(articleId);
-    }
-
-    public Article findById(int articleId) {
-        return articleRepository.findById(articleId);
     }
 
     /**
@@ -81,5 +101,24 @@ public class ArticleService {
             }
         }
         return articleDTOList;
+    }
+
+    /**
+     * 获得总帖子数量
+     *
+     * @return
+     */
+    public int getCount() {
+        return articleRepository.getCount();
+    }
+
+    /**
+     * 获取用户的帖子数量
+     *
+     * @param accountId
+     * @return
+     */
+    public int getCount(String accountId) {
+        return articleRepository.getCountByAccountId(accountId);
     }
 }

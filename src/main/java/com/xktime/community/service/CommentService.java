@@ -33,8 +33,8 @@ public class CommentService {
         return commentRepository.findByAccountId(accountId);
     }
 
-    public List<Comment> findByArticleIdAndPage(int pageStartIndex, int pageShowNum, int articleId) {
-        return commentRepository.findByArticleIdAndPage(pageStartIndex, pageShowNum, articleId);
+    public List<Comment> findByOffsetAndArticleId(int pageStartIndex, int pageShowNum, int articleId) {
+        return commentRepository.findByOffsetAndArticleId(pageStartIndex, pageShowNum, articleId);
     }
     /**
      * 获得帖子的评论数量

@@ -17,8 +17,6 @@ public class PaginationService {
 
     private final static int PAGE_SHOW_NUM = 10;//每页显示多少条数据
     private final static int PAGE_BUTTON_NUM = 5;//显示页码按钮个数
-    @Autowired
-    ArticleRepository articleRepository;
 
     @Autowired
     ArticleService articleService;
@@ -48,9 +46,9 @@ public class PaginationService {
         List<Article> articleList;
         if (accountId != null) {
             //如果accountId为空返回该页所有帖子，否则返回用户的该页帖子
-            articleList = articleRepository.getUsersArticleListByPage(pageStartIndex, PAGE_SHOW_NUM, accountId);
+            articleList = articleService.findByOffsetAndAccountId(pageStartIndex, PAGE_SHOW_NUM, accountId);
         } else {
-            articleList = articleRepository.getArticleListByPage(pageStartIndex, PAGE_SHOW_NUM);
+            articleList = articleService.findByOffset(pageStartIndex, PAGE_SHOW_NUM);
         }
         return articleService.transferArticleListToArticleDTOList(articleList);
     }
@@ -67,7 +65,7 @@ public class PaginationService {
         page = page > lastPage ? lastPage : page;
         int pageStartIndex = (page - 1) * PAGE_SHOW_NUM;//页面第一个帖子,在数据库的索引
         //获取当前页面所要显示的所有帖子
-        List<Comment> commentList = commentService.findByArticleIdAndPage(pageStartIndex, PAGE_SHOW_NUM, articleId);
+        List<Comment> commentList = commentService.findByOffsetAndArticleId(pageStartIndex, PAGE_SHOW_NUM, articleId);
         return commentService.transferCommentListToCommentDTOList(commentList);
     }
 
@@ -146,7 +144,7 @@ public class PaginationService {
      * 获取帖子总页数
      */
     private int getArticlePageCount() {
-        double articleCount = articleRepository.getCount();
+        double articleCount = articleService.getCount();
         return (int) Math.ceil(articleCount / PAGE_SHOW_NUM);
     }
 
@@ -157,15 +155,27 @@ public class PaginationService {
      * @return
      */
     private int getArticlePageCount(@NonNull String accountId) {
-        double articleCount = articleRepository.getUsersArticleCount(accountId);
+        double articleCount = articleService.getCount(accountId);
         return (int) Math.ceil(articleCount / PAGE_SHOW_NUM);
     }
 
+    /**
+     * 获取用户评论的总页数
+     *
+     * @param accountId
+     * @return
+     */
     private int getCommentPageCountByAccountId(@NonNull String accountId) {
         double commentCount = commentService.getCommentsCountByAccountId(accountId);
         return (int) Math.ceil(commentCount / PAGE_SHOW_NUM);
     }
 
+    /**
+     * 获取文章评论的总页数
+     *
+     * @param articleId
+     * @return
+     */
     private int getCommentPageCountByArticleId(@NonNull int articleId) {
         double commentCount = commentService.getCommentsCountByArticleId(articleId);
         return (int) Math.ceil(commentCount / PAGE_SHOW_NUM);

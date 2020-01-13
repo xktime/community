@@ -12,33 +12,33 @@ public interface ArticleRepository {
             "VALUES (#{title},#{content},#{authorAccountId},#{postTime})")
     void saveArticle(Article article);
 
-    @Select("SELECT COUNT(*) FROM article")
-    int getCount();
-
-    @Select("SELECT COUNT(*) FROM article WHERE author_account_id = #{accountId}")
-    int getUsersArticleCount(@Param("accountId") String accountId);
-
     @Select("SELECT * FROM article WHERE id = #{id}")
     Article findById(@Param("id")int id);
 
     @Select("SELECT * FROM article ORDER BY post_time DESC")
-    List<Article> getArticles();
+    List<Article> findAll();
 
     @Select("SELECT * FROM article " +
             "ORDER BY post_time DESC " +
             "LIMIT #{pageShowNum} OFFSET #{pageStartIndex}")
-    List<Article> getArticleListByPage(@Param("pageStartIndex") int pageStartIndex,
-                                       @Param("pageShowNum") int pageShowNum);
+    List<Article> findByOffset(@Param("pageStartIndex") int pageStartIndex,
+                               @Param("pageShowNum") int pageShowNum);
 
     @Select("SELECT * FROM article WHERE author_account_id = #{accountId} " +
             "ORDER BY post_time DESC " +
             "LIMIT #{pageShowNum} OFFSET #{pageStartIndex}")
-    List<Article> getUsersArticleListByPage(@Param("pageStartIndex") int pageStartIndex,
-                                            @Param("pageShowNum") int pageShowNum,
-                                            @Param("accountId") String accountId);
+    List<Article> findByOffsetAndAccountId(@Param("pageStartIndex") int pageStartIndex,
+                                           @Param("pageShowNum") int pageShowNum,
+                                           @Param("accountId") String accountId);
 
     @Select("SELECT * FROM article WHERE author_account_id = #{accountId} ORDER BY post_time DESC")
-    List<Article> getArticlesByAccountId(@Param("accountId") String accountId);
+    List<Article> findByAccountId(@Param("accountId") String accountId);
+
+    @Select("SELECT COUNT(*) FROM article")
+    int getCount();
+
+    @Select("SELECT COUNT(*) FROM article WHERE author_account_id = #{accountId}")
+    int getCountByAccountId(@Param("accountId") String accountId);
 
     @Update("UPDATE article SET view_count = view_count + 1 WHERE id = #{id}")
     void incView(@Param("id")int id);
