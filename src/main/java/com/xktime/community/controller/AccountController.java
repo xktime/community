@@ -35,10 +35,10 @@ public class AccountController {
         if (object instanceof User) {
             User user = (User) object;
             //帖子数据
-            List<ArticleDTO> articleDTOList = paginationService.getArticleDTOListByPage(page, user.getAccountId());
+            List<ArticleDTO> articleDTOList = paginationService.getArticleDTOList(page, user.getAccountId());
             model.addAttribute("articles", articleDTOList);
             //分页数据
-            model.addAttribute("pagination", paginationService.getPaginationDTOByPage(page, user.getAccountId()));
+            model.addAttribute("pagination", paginationService.getArticlePaginationDTO(page, user.getAccountId()));
         }
         return "my-articles";
     }
@@ -61,10 +61,10 @@ public class AccountController {
             model.addAttribute("user", userService.transferUserToUserDTO(user));
 
             //帖子数据
-            List<ArticleDTO> articleDTOList = paginationService.getArticleDTOListByPage(page, user.getAccountId());
+            List<ArticleDTO> articleDTOList = paginationService.getArticleDTOList(page, user.getAccountId());
             model.addAttribute("articles", articleDTOList);
-            //分页数据
-            model.addAttribute("pagination", paginationService.getPaginationDTOByPage(page, user.getAccountId()));
+            //帖子分页数据
+            model.addAttribute("pagination", paginationService.getArticlePaginationDTO(page, user.getAccountId()));
         }
         return "profile";
     }

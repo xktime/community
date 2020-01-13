@@ -3,7 +3,6 @@ package com.xktime.community.controller;
 import com.xktime.community.model.dto.ArticleDTO;
 import com.xktime.community.model.entity.User;
 import com.xktime.community.service.CookieService;
-import com.xktime.community.service.ArticleService;
 import com.xktime.community.service.PaginationService;
 import com.xktime.community.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,10 +38,10 @@ public class IndexController {
         }
         model.addAttribute("title", "发现");
         //帖子数据
-        List<ArticleDTO> articleDTOList = paginationService.getArticleDTOListByPage(page);
+        List<ArticleDTO> articleDTOList = paginationService.getArticleDTOList(page);
         model.addAttribute("articles", articleDTOList);
         //分页数据
-        model.addAttribute("pagination", paginationService.getPaginationDTOByPage(page));
+        model.addAttribute("pagination", paginationService.getArticlePaginationDTO(page));
         return "index";
     }
 

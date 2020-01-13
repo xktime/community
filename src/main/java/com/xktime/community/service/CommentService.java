@@ -34,12 +34,21 @@ public class CommentService {
     }
 
     /**
-     * 获得文章的评论数量
+     * 获得帖子的评论数量
      * @param articleId
      * @return
      */
-    public int getCommentsCount(int articleId) {
+    public int getCommentsCountByArticleId(int articleId) {
         return commentRepository.getCommentCountByArticleId(articleId);
+    }
+
+    /**
+     * 获得文章的评论数量
+     * @param accountId
+     * @return
+     */
+    public int getCommentsCountByAccountId(String accountId) {
+        return commentRepository.getCommentCountByAccountId(accountId);
     }
 
 

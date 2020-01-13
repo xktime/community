@@ -24,4 +24,7 @@ public interface CommentRepository {
 
     @Select("SELECT COUNT(*) FROM comment WHERE article_id = #{articleId}")
     int getCommentCountByArticleId(@Param("articleId") int articleId);
+
+    @Select("SELECT COUNT(*) FROM comment WHERE author_account_id = #{accountId}")
+    int getCommentCountByAccountId(@Param("accountId") String accountId);
 }

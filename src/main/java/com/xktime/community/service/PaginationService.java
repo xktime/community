@@ -4,6 +4,7 @@ import com.xktime.community.model.dto.ArticleDTO;
 import com.xktime.community.model.dto.PaginationDTO;
 import com.xktime.community.model.entity.Article;
 import com.xktime.community.repository.ArticleRepository;
+import lombok.NonNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,28 +13,31 @@ import java.util.List;
 @Service
 public class PaginationService {
 
-    private final static int PAGE_SHOW_NUM = 10;//每页显示多少条帖子
-    private final static int PAGE_NUMBER_NUM = 5;//显示页码按钮个数
+    private final static int PAGE_SHOW_NUM = 10;//每页显示多少条数据
+    private final static int PAGE_BUTTON_NUM = 5;//显示页码按钮个数
     @Autowired
     ArticleRepository articleRepository;
 
     @Autowired
     ArticleService articleService;
 
+    @Autowired
+    CommentService commentService;
+
     /**
      * 获取该页的所有帖子
      */
-    public List<ArticleDTO> getArticleDTOListByPage(int page) {
-        return getArticleDTOListByPage(page, null);
+    public List<ArticleDTO> getArticleDTOList(int page) {
+        return getArticleDTOList(page, null);
     }
 
     /**
      * 获取用户该页的所有帖子
      */
-    public List<ArticleDTO> getArticleDTOListByPage(int page, String accountId) {
+    public List<ArticleDTO> getArticleDTOList(int page, String accountId) {
         page = page < 1 ? 1 : page;
         //总页数
-        int pageCount = getPageCount(accountId);
+        int pageCount = accountId == null ? getArticlePageCount() : getArticlePageCount(accountId);
         pageCount = pageCount == 0 ? 1 : pageCount;
         int lastPage = pageCount;//最后一页为总页数
         page = page > lastPage ? lastPage : page;
@@ -50,31 +54,55 @@ public class PaginationService {
     }
 
     /**
-     * 获取该页的分页数据
+     * 获取所有帖子该页的分页数据
      */
-    public PaginationDTO getPaginationDTOByPage(int page) {
-        return getPaginationDTOByPage(page, null);
+    public PaginationDTO getArticlePaginationDTO(int page) {
+        int pageCount = getArticlePageCount();
+        return getPaginationDTO(page, pageCount);
     }
 
     /**
-     * 获取用户帖子的分页数据
+     * 获取用户帖子该页的分页数据
+     */
+    public PaginationDTO getArticlePaginationDTO(int page, @NonNull String accountId) {
+        int pageCount = getArticlePageCount(accountId);
+        return getPaginationDTO(page, pageCount);
+    }
+
+    /**
+     * 获取用户评论的分页数据
+     */
+    public PaginationDTO getCommentPaginationDTOByAccountId(int page, String accountId) {
+        int pageCount = getCommentPageCountByAccountId(accountId);
+        return getPaginationDTO(page, pageCount);
+    }
+
+    /**
+     * 获取帖子评论的分页数据
+     */
+    public PaginationDTO getCommentPaginationDTOByArticleId(int page, int articleId) {
+        int pageCount = getCommentPageCountByArticleId(articleId);
+        return getPaginationDTO(page, pageCount);
+    }
+
+    /**
+     * 获取分页数据
      *
      * @param page
-     * @param accountId 如果accountId==0 表示所有的帖子。
+     * @param pageCount
      * @return
      */
-    public PaginationDTO getPaginationDTOByPage(int page, String accountId) {
+    private PaginationDTO getPaginationDTO(int page, int pageCount) {
         PaginationDTO pagination = new PaginationDTO();
         pagination.setPageNum(page);
-        int pageCount = getPageCount(accountId);
         pageCount = pageCount == 0 ? 1 : pageCount;
         pagination.setPageCount(pageCount);
         //显示的第一个页码
-        int firstPageNum = page - PAGE_NUMBER_NUM / 2;
+        int firstPageNum = page - PAGE_BUTTON_NUM / 2;
         firstPageNum = firstPageNum < 1 ? 1 : firstPageNum;
         pagination.setFirstPageNum(firstPageNum);
         //显示的最后一个页码
-        int lastPageNum = firstPageNum + PAGE_NUMBER_NUM - 1;
+        int lastPageNum = firstPageNum + PAGE_BUTTON_NUM - 1;
         lastPageNum = lastPageNum > pageCount ? pageCount : lastPageNum;
         pagination.setLastPageNum(lastPageNum);
         if (page != 1) {
@@ -97,25 +125,29 @@ public class PaginationService {
     }
 
     /**
-     * 获取总页数
+     * 获取帖子总页数
      */
-    public int getPageCount() {
-        return getPageCount(null);
+    private int getArticlePageCount() {
+        double articleCount = articleRepository.getCount();
+        return (int) Math.ceil(articleCount / PAGE_SHOW_NUM);
     }
 
     /**
-     * 如果accountId为空获取所有帖子的总页数，否则获取用户帖子的总页数
+     * 获取用户帖子的总页数
      *
      * @param accountId
      * @return
      */
-    public int getPageCount(String accountId) {
-        double articleCount;
-        if (accountId == null) {
-            articleCount = articleRepository.getCount();
-        } else {
-            articleCount = articleRepository.getUsersArticleCount(accountId);
-        }
+    private int getArticlePageCount(@NonNull String accountId) {
+        double articleCount = articleRepository.getUsersArticleCount(accountId);
         return (int) Math.ceil(articleCount / PAGE_SHOW_NUM);
+    }
+
+    private int getCommentPageCountByAccountId(@NonNull String accountId) {
+        return commentService.getCommentsCountByAccountId(accountId);
+    }
+
+    private int getCommentPageCountByArticleId(@NonNull int articleId) {
+        return commentService.getCommentsCountByArticleId(articleId);
     }
 }

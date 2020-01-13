@@ -61,7 +61,7 @@ public class ArticleService {
         }
         articleDTO.setAuthor(userService.transferUserToUserDTO(author));
         BeanUtils.copyProperties(article, articleDTO);
-        articleDTO.setCommentCount(commentService.getCommentsCount(article.getId()));
+        articleDTO.setCommentCount(commentService.getCommentsCountByArticleId(article.getId()));
         if (articleDTO.getPostTime() == null) {
             //如果日期为空,默认时间为1970年
             long time = 0L;
