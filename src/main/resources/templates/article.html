@@ -42,6 +42,38 @@
         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-6">
         </div>
     </div>
+    <nav class="side" aria-label="Page navigation" th:if="${pagination != null}">
+        <ul class="pagination">
+            <li th:if="${pagination.isShowFirstButton()}">
+                <a th:href="@{/article/(page=1,id=${article.getId()})}" aria-label="Previous">
+                    <span aria-hidden="true">&lt;&lt;</span>
+                </a>
+            </li>
+            <li th:if="${pagination.isShowPreviousButton()}">
+                <a th:href="@{/article/(page=${pagination.getPageNum() - 1},id=${article.getId()})}"
+                   aria-label="Previous">
+                    <span aria-hidden="true">&lt;</span>
+                </a>
+            </li>
+
+            <li th:each="page : ${#numbers.sequence(pagination.getFirstPageNum(), pagination.getLastPageNum())}" th:class="${pagination.getPageNum() == page}? 'active' : ''">
+                <a th:href="@{/article/(page=${page},id=${article.getId()})}" th:text="${page}"></a>
+            </li>
+
+            <li th:if="${pagination.isShowNextButton()}">
+                <a th:href="@{/article/(page=${pagination.getPageNum() +1 },id=${article.getId()})}"
+                   aria-label="Previous">
+                    <span aria-hidden="true">&gt;</span>
+                </a>
+            </li>
+            <li th:if="${pagination.isShowLastButton()}">
+                <a th:href="@{/article/(page=${pagination.getPageCount()},id=${article.getId()})}"
+                   aria-label="Previous">
+                    <span aria-hidden="true">&gt;&gt;</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
     <div class="container-fluid main">
         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-6">
             <form action="/article/comment" method="post">

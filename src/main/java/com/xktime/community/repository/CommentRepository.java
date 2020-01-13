@@ -22,6 +22,20 @@ public interface CommentRepository {
     @Select("SELECT * FROM comment WHERE author_account_id = #{accountId}")
     List<Comment> findByAccountId(@Param("accountId") String accountId);
 
+    @Select("SELECT * FROM comment WHERE article_id = #{articleId} " +
+            "ORDER BY post_time DESC " +
+            "LIMIT #{pageShowNum} OFFSET #{pageStartIndex}")
+    List<Comment> findByArticleIdAndPage(@Param("pageStartIndex") int pageStartIndex,
+                                         @Param("pageShowNum") int pageShowNum,
+                                         @Param("articleId") int articleId);
+
+    @Select("SELECT * FROM article WHERE author_account_id = #{accountId} " +
+            "ORDER BY post_time DESC " +
+            "LIMIT #{pageShowNum} OFFSET #{pageStartIndex}")
+    List<Comment> findByAccountIdAndPage(@Param("pageStartIndex") int pageStartIndex,
+                                         @Param("pageShowNum") int pageShowNum,
+                                         @Param("accountId") String accountId);
+
     @Select("SELECT COUNT(*) FROM comment WHERE article_id = #{articleId}")
     int getCommentCountByArticleId(@Param("articleId") int articleId);
 

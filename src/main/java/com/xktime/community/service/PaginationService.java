@@ -1,8 +1,10 @@
 package com.xktime.community.service;
 
 import com.xktime.community.model.dto.ArticleDTO;
+import com.xktime.community.model.dto.CommentDTO;
 import com.xktime.community.model.dto.PaginationDTO;
 import com.xktime.community.model.entity.Article;
+import com.xktime.community.model.entity.Comment;
 import com.xktime.community.repository.ArticleRepository;
 import lombok.NonNull;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,6 +53,22 @@ public class PaginationService {
             articleList = articleRepository.getArticleListByPage(pageStartIndex, PAGE_SHOW_NUM);
         }
         return articleService.transferArticleListToArticleDTOList(articleList);
+    }
+
+    /**
+     * 获取该页的所有帖子
+     */
+    public List<CommentDTO> getCommentDTOListByArticleId(int page, int articleId) {
+        page = page < 1 ? 1 : page;
+        //总页数
+        int pageCount = getCommentPageCountByArticleId(articleId);
+        pageCount = pageCount == 0 ? 1 : pageCount;
+        int lastPage = pageCount;//最后一页为总页数
+        page = page > lastPage ? lastPage : page;
+        int pageStartIndex = (page - 1) * PAGE_SHOW_NUM;//页面第一个帖子,在数据库的索引
+        //获取当前页面所要显示的所有帖子
+        List<Comment> commentList = commentService.findByArticleIdAndPage(pageStartIndex, PAGE_SHOW_NUM, articleId);
+        return commentService.transferCommentListToCommentDTOList(commentList);
     }
 
     /**
@@ -144,10 +162,12 @@ public class PaginationService {
     }
 
     private int getCommentPageCountByAccountId(@NonNull String accountId) {
-        return commentService.getCommentsCountByAccountId(accountId);
+        double commentCount = commentService.getCommentsCountByAccountId(accountId);
+        return (int) Math.ceil(commentCount / PAGE_SHOW_NUM);
     }
 
     private int getCommentPageCountByArticleId(@NonNull int articleId) {
-        return commentService.getCommentsCountByArticleId(articleId);
+        double commentCount = commentService.getCommentsCountByArticleId(articleId);
+        return (int) Math.ceil(commentCount / PAGE_SHOW_NUM);
     }
 }

@@ -25,7 +25,7 @@ public class CommentService {
         commentRepository.saveComment(comment);
     }
 
-    public List<Comment> findByArticleId(int articleId) {
+    public List<Comment> findByArticleId(@NonNull int articleId) {
         return commentRepository.findByArticleId(articleId);
     }
 
@@ -33,6 +33,9 @@ public class CommentService {
         return commentRepository.findByAccountId(accountId);
     }
 
+    public List<Comment> findByArticleIdAndPage(int pageStartIndex, int pageShowNum, int articleId) {
+        return commentRepository.findByArticleIdAndPage(pageStartIndex, pageShowNum, articleId);
+    }
     /**
      * 获得帖子的评论数量
      * @param articleId
