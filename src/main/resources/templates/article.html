@@ -11,39 +11,42 @@
 </head>
 <body>
     <div th:insert="~{header :: header}"></div>
-    <div class="row  main">
-        <div class="col-xs-10 col-md-10">
+    <div class="container-fluid">
+        <div class="col-xs-0 col-sm-2 col-md-2 col-lg-3"></div>
+        <div class="col-xs-12 col-sm-8 col-md-8 col-lg-6 main">
             <div class="page-header">
                 <h1 th:text="${article.getTitle()}"></h1>
             </div>
             <p><small th:text="${article.getContent()}"></small></p>
+            <p class="panel-heading navbar-right" th:text="${#dates.format(article.getPostTime(),'yyyy-MM-dd HH:mm')}"></p>
         </div>
-        <div class="col-xs-2 col-md-2">
-            <div class="thumbnail profile-photo">
-                <img th:src="${article.getAuthor().getAvatarUrl()}" alt="用户头像" class="img-circle">
-            </div>
-        </div>
+        <div class="col-xs-0 col-sm-2 col-md-2 col-lg-3"></div>
     </div>
-    <div class="container-fluid main">
-        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-6" style="height:750px">
+    <div class="container-fluid">
+        <div class="col-xs-0 col-sm-2 col-md-2 col-lg-3"></div>
+        <div class="col-xs-12 col-sm-8 col-md-8 col-lg-6 main">
             <div class="media" th:each="comment : ${comments}">
                 <div class="media-left">
                     <a th:href="@{/account/profile(id=${comment.getAuthor().getAccountId()})}">
-                        <img class="media-object img-rounded"
-                             th:src="${comment.getAuthor().getAvatarUrl()}">
+                        <img class="comment-photo img-rounded" th:src="${comment.getAuthor().getAvatarUrl()}">
                     </a>
                 </div>
                 <div class="media-body">
-                    <p th:text="${comment.getContent()}"></p>
-                    <span th:text="${#dates.format(comment.getPostTime(),'yyyy-MM-dd HH:mm')}" ></span>
+                    <div class="panel panel-default">
+                        <div class="panel-heading" th:text="${#dates.format(comment.getPostTime(),'yyyy-MM-dd HH:mm')}"></div>
+                        <div class="panel-body">
+                            <p th:text="${comment.getContent()}"></p>
+                        </div>
                 </div>
             </div>
         </div>
         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-6">
         </div>
     </div>
-    <nav class="side" aria-label="Page navigation" th:if="${pagination != null}">
-        <ul class="pagination">
+        <div class="col-xs-0 col-sm-2 col-md-2 col-lg-3"></div>
+    </div>
+    <nav aria-label="Page navigation" th:if="${pagination != null}" style="width:32%; text-align:-webkit-right;">
+        <ul class="pagination" >
             <li th:if="${pagination.isShowFirstButton()}">
                 <a th:href="@{/article/(page=1,id=${article.getId()})}" aria-label="Previous">
                     <span aria-hidden="true">&lt;&lt;</span>
@@ -74,8 +77,9 @@
             </li>
         </ul>
     </nav>
-    <div class="container-fluid main">
-        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-6">
+    <div class="container-fluid">
+        <div class="col-xs-0 col-sm-2 col-md-2 col-lg-3"></div>
+        <div class="col-xs-12 col-sm-8 col-md-8 col-lg-6">
             <form action="/article/comment" method="post">
                 <div class="form-group" id="question-editor">
                     <label for="content">评论:</label>
@@ -97,8 +101,7 @@
                 </div>
             </form>
         </div>
-        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-6">
-        </div>
+        <div class="col-xs-0 col-sm-2 col-md-2 col-lg-3"></div>
     </div>
 </body>
 </html>
