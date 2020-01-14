@@ -55,17 +55,14 @@ public class ArticleController {
         model.addAttribute("content", content);
         User user = (User) request.getSession().getAttribute("user");
         if (user == null) {
-            model.addAttribute("error", "用户未登录");
-            return "article";
+            return "redirect:/article/?id=" + articleId;
         }
         Article article = articleService.findById(articleId);
         if (article == null) {
-            model.addAttribute("error", "文章不存在");
-            return "article";
+            return "redirect:/article/?id=" + articleId;
         }
         if (StringUtils.isBlank(content)) {
-            model.addAttribute("error", "内容不能为空");
-            return "article";
+            return "redirect:/article/?id=" + articleId;
         }
         //创建Comment对象,保存进数据库
         Comment comment = new Comment(articleId, user.getAccountId(), content, new Date());
