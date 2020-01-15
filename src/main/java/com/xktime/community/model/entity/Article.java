@@ -1,10 +1,12 @@
 package com.xktime.community.model.entity;
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.Date;
 
 @Data
+@NoArgsConstructor
 public class Article {
     private int id;
     private String title;
@@ -12,9 +14,6 @@ public class Article {
     private String authorAccountId;
     private int viewCount;
     private Date postTime;
-
-    public Article() {
-    }
 
     public Article(String title, String content, String authorAccountId, Date postTime) {
         this.title = title;

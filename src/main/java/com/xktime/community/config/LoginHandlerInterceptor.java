@@ -1,6 +1,5 @@
 package com.xktime.community.config;
 
-import com.xktime.community.model.entity.User;
 import org.springframework.web.servlet.HandlerInterceptor;
 
 import javax.servlet.http.HttpServletRequest;
@@ -11,10 +10,10 @@ public class LoginHandlerInterceptor implements HandlerInterceptor {
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         Object user = request.getSession().getAttribute("user");
         if (user == null) {
-            request.getRequestDispatcher("/").forward(request, response);
+            response.sendRedirect("/");
+            return false;
         } else {
             return true;
         }
-        return false;
     }
 }
