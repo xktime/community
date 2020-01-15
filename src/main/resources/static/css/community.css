@@ -15,6 +15,11 @@ body {
     padding-left: 20px;
 }
 
+.pagination-center {
+    width: 65%;
+    text-align: center;
+}
+
 .community-tag:hover {
     background-color: #339dff;
     color: #fff !important;
