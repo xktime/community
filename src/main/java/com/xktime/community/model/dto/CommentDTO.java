@@ -6,7 +6,7 @@ import java.util.Date;
 
 @Data
 public class CommentDTO {
-    private int articleId;
+    private ArticleDTO article;
     private UserDTO author;
     private String content;
     private Date postTime;

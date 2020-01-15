@@ -6,7 +6,6 @@ import lombok.NoArgsConstructor;
 import java.util.Date;
 
 @Data
-@NoArgsConstructor
 public class Comment {
     private int id;
     private int articleId;
@@ -14,6 +13,7 @@ public class Comment {
     private String content;
     private Date postTime;
 
+    Comment(){}
     public Comment(int articleId, String authorAccountId, String content, Date postTime) {
         this.articleId = articleId;
         this.authorAccountId = authorAccountId;

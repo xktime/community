@@ -70,6 +70,22 @@ public class PaginationService {
     }
 
     /**
+     * 获取该页的所有评论
+     */
+    public List<CommentDTO> getCommentDTOListByAccountId(int page, String accountId) {
+        page = page < 1 ? 1 : page;
+        //总页数
+        int pageCount = getCommentPageCountByAccountId(accountId);
+        pageCount = pageCount == 0 ? 1 : pageCount;
+        int lastPage = pageCount;//最后一页为总页数
+        page = page > lastPage ? lastPage : page;
+        int pageStartIndex = (page - 1) * PAGE_SHOW_NUM;//页面第一个帖子,在数据库的索引
+        //获取当前页面所要显示的所有帖子
+        List<Comment> commentList = commentService.findByOffsetAndAccountId(pageStartIndex, PAGE_SHOW_NUM, accountId);
+        return commentService.transferCommentListToCommentDTOList(commentList);
+    }
+
+    /**
      * 获取所有帖子该页的分页数据
      */
     public PaginationDTO getArticlePaginationDTO(int page) {

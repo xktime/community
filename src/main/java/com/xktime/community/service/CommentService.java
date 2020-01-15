@@ -1,6 +1,8 @@
 package com.xktime.community.service;
 
+import com.xktime.community.model.dto.ArticleDTO;
 import com.xktime.community.model.dto.CommentDTO;
+import com.xktime.community.model.entity.Article;
 import com.xktime.community.model.entity.Comment;
 import com.xktime.community.model.entity.User;
 import com.xktime.community.repository.CommentRepository;
@@ -21,6 +23,9 @@ public class CommentService {
     @Autowired
     UserService userService;
 
+    @Autowired
+    ArticleService articleService;
+
     public void saveComment(Comment comment) {
         commentRepository.saveComment(comment);
     }
@@ -35,6 +40,10 @@ public class CommentService {
 
     public List<Comment> findByOffsetAndArticleId(int pageStartIndex, int pageShowNum, int articleId) {
         return commentRepository.findByOffsetAndArticleId(pageStartIndex, pageShowNum, articleId);
+    }
+
+    public List<Comment> findByOffsetAndAccountId(int pageStartIndex, int pageShowNum, String accountId) {
+        return commentRepository.findByOffsetAndAccountId(pageStartIndex, pageShowNum, accountId);
     }
     /**
      * 获得帖子的评论数量
@@ -68,6 +77,10 @@ public class CommentService {
         User user = userService.findByAccountId(comment.getAuthorAccountId());
         if (user != null) {
             commentDTO.setAuthor(userService.transferUserToUserDTO(user));
+        }
+        Article article = articleService.findById(comment.getArticleId());
+        if (article != null) {
+            commentDTO.setArticle(articleService.transferArticleToArticleDTO(article));
         }
         BeanUtils.copyProperties(comment, commentDTO);
         return commentDTO;
