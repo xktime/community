@@ -105,12 +105,10 @@
                 <span aria-hidden="true">&lt;</span>
             </a>
         </li>
-
         <li th:each="page : ${#numbers.sequence(pagination.getFirstPageNum(), pagination.getLastPageNum())}"
             th:class="${pagination.getPageNum() == page}? 'active' : ''">
             <a th:href="@{/account/profile(page=${page},id=${user.getAccountId()})}" th:text="${page}"></a>
         </li>
-
         <li th:if="${pagination.isShowNextButton()}">
             <a th:href="@{/account/profile(page=${pagination.getPageNum() +1 },id=${user.getAccountId()})}"
                aria-label="Previous">
@@ -138,12 +136,10 @@
                 <span aria-hidden="true">&lt;</span>
             </a>
         </li>
-
         <li th:each="page : ${#numbers.sequence(pagination.getFirstPageNum(), pagination.getLastPageNum())}"
             th:class="${pagination.getPageNum() == page}? 'active' : ''">
             <a th:href="@{/account/profile/comment(page=${page},id=${user.getAccountId()})}" th:text="${page}"></a>
         </li>
-
         <li th:if="${pagination.isShowNextButton()}">
             <a th:href="@{/account/profile/comment(page=${pagination.getPageNum() +1 },id=${user.getAccountId()})}"
                aria-label="Previous">

@@ -35,9 +35,8 @@ public class GithubLoginServiceImpl implements LoginService {
     }
 
     /**
-     *
-     * @param state  随机值，用来防止 cross-sit 攻击
-     * @param scope 指定了最后能获取到的信息，取值范围有 user 和 repo 等等,默认同时取 user 和 repo 的信息
+     * @param state       随机值，用来防止 cross-sit 攻击
+     * @param scope       指定了最后能获取到的信息，取值范围有 user 和 repo 等等,默认同时取 user 和 repo 的信息
      * @param allowSignUp 是否允许用户在认证的时候注册 Github 账号
      * @return
      */
@@ -58,10 +57,9 @@ public class GithubLoginServiceImpl implements LoginService {
     }
 
     /**
-     *
-     * @param state  随机值，用来防止 cross-sit 攻击
-     * @param login 推荐登录的 Github 账户
-     * @param scope 指定了最后能获取到的信息，取值范围有 user 和 repo 等等,默认同时取 user 和 repo 的信息
+     * @param state       随机值，用来防止 cross-sit 攻击
+     * @param login       推荐登录的 Github 账户
+     * @param scope       指定了最后能获取到的信息，取值范围有 user 和 repo 等等,默认同时取 user 和 repo 的信息
      * @param allowSignUp 是否允许用户在认证的时候注册 Github 账号
      * @return
      */

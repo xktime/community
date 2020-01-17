@@ -60,7 +60,7 @@ public class AccountController {
                 model.addAttribute("title", "TA");
             }
             //给前端区分是评论还是帖子
-            model.addAttribute("page","article");
+            model.addAttribute("page", "article");
             model.addAttribute("user", userService.transferUserToUserDTO(user));
             //帖子数据
             List<ArticleDTO> articleDTOList = paginationService.getArticleDTOList(page, user.getAccountId());
@@ -86,7 +86,7 @@ public class AccountController {
                 model.addAttribute("title", "TA");
             }
             //给前端区分是评论还是帖子
-            model.addAttribute("page","comment");
+            model.addAttribute("page", "comment");
             model.addAttribute("user", userService.transferUserToUserDTO(user));
             //评论数据
             List<CommentDTO> commentDTOList = paginationService.getCommentDTOListByAccountId(page, user.getAccountId());

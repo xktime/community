@@ -45,8 +45,10 @@ public class CommentService {
     public List<Comment> findByOffsetAndAccountId(int pageStartIndex, int pageShowNum, String accountId) {
         return commentRepository.findByOffsetAndAccountId(pageStartIndex, pageShowNum, accountId);
     }
+
     /**
      * 获得帖子的评论数量
+     *
      * @param articleId
      * @return
      */
@@ -56,6 +58,7 @@ public class CommentService {
 
     /**
      * 获得文章的评论数量
+     *
      * @param accountId
      * @return
      */

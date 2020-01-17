@@ -53,7 +53,7 @@ public class ArticleService {
     /**
      * @param startIndex 从0开始
      * @param num
-     * @param accountId list[startIndex, startIndex+num-1]
+     * @param accountId  list[startIndex, startIndex+num-1]
      * @return
      */
     public List<Article> findByOffsetAndAccountId(int startIndex, int num, String accountId) {

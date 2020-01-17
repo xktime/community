@@ -13,7 +13,7 @@ public interface ArticleRepository {
     void saveArticle(Article article);
 
     @Select("SELECT * FROM article WHERE id = #{id}")
-    Article findById(@Param("id")int id);
+    Article findById(@Param("id") int id);
 
     @Select("SELECT * FROM article ORDER BY post_time DESC")
     List<Article> findAll();
@@ -41,5 +41,5 @@ public interface ArticleRepository {
     int getCountByAccountId(@Param("accountId") String accountId);
 
     @Update("UPDATE article SET view_count = view_count + 1 WHERE id = #{id}")
-    void incView(@Param("id")int id);
+    void incView(@Param("id") int id);
 }

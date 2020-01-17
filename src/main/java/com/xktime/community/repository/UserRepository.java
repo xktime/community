@@ -17,6 +17,6 @@ public interface UserRepository {
     User findByToken(@Param("token") String token);
 
     @Select("SELECT * FROM user WHERE account_id = #{accountId}")
-    User findByAccountId(@Param("accountId")String accountId);
+    User findByAccountId(@Param("accountId") String accountId);
 
 }
