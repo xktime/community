@@ -12,8 +12,8 @@
 <body>
     <div th:insert="~{header :: header}"></div>
     <div th:insert="~{articles :: articles}"></div>
-    <nav class="pagination-center" aria-label="Page navigation" th:if="${pagination != null}">
-        <ul class="pagination">
+    <nav aria-label="Page navigation" th:if="${pagination != null}">
+        <ul class="pagination pagination-ul">
             <li th:if="${pagination.isShowFirstButton()}">
                 <a th:href="@{/(page=1)}" aria-label="Previous">
                     <span aria-hidden="true">&lt;&lt;</span>
@@ -26,7 +26,8 @@
                 </a>
             </li>
 
-            <li th:each="page : ${#numbers.sequence(pagination.getFirstPageNum(), pagination.getLastPageNum())}" th:class="${pagination.getPageNum() == page}? 'active' : ''">
+            <li th:each="page : ${#numbers.sequence(pagination.getFirstPageNum(), pagination.getLastPageNum())}"
+                th:class="${pagination.getPageNum() == page}? 'active pagination-li' : 'pagination-li'">
                 <a th:href="@{/(page=${page})}" th:text="${page}"></a>
             </li>
 

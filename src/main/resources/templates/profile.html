@@ -10,152 +10,152 @@
     <script src="/js/bootstrap.min.js" type="application/javascript"></script>
 </head>
 <body>
-<div th:insert="~{header :: header}"></div>
-<!--用户资料-->
-<div class="container-fluid">
-    <div class="col-xs-0 col-sm-2 col-md-2 col-lg-3"></div>
-    <div class="col-xs-12 col-sm-8 col-md-8 col-lg-6 main row">
-        <div class="col-xs-2 col-md-2">
-            <div class="thumbnail profile-photo">
-                <img th:src="${user.getAvatarUrl()}" alt="用户头像" class="img-circle">
+    <div th:insert="~{header :: header}"></div>
+    <!--用户资料-->
+    <div class="container-fluid">
+        <div class="col-xs-0 col-sm-2 col-md-2 col-lg-3"></div>
+        <div class="col-xs-12 col-sm-8 col-md-8 col-lg-6 main row">
+            <div class="col-xs-2 col-md-2">
+                <div class="thumbnail profile-photo">
+                    <img th:src="${user.getAvatarUrl()}" alt="用户头像" class="img-circle">
+                </div>
+            </div>
+            <div class="col-xs-10 col-md-10" style="padding-left: 50px;">
+                <p th:text="'用户ID:'+ ${user.getAccountId()}" style="font-size: 24px;font-weight:bold"></p>
+                <p th:text="'用户名:' + ${user.getName()}"></p>
+                <p th:text="'个人介绍:' + ${user.getBio() == null ? '无' : user.getBio()}"></p>
+                <p th:text="'上次登录时间:' + ${#dates.format(user.getLoginTime(),'yyyy-MM-dd HH:mm')}"></p>
             </div>
         </div>
-        <div class="col-xs-10 col-md-10" style="padding-left: 50px;">
-            <p th:text="'用户ID:'+ ${user.getAccountId()}" style="font-size: 24px;font-weight:bold"></p>
-            <p th:text="'用户名:' + ${user.getName()}"></p>
-            <p th:text="'个人介绍:' + ${user.getBio() == null ? '无' : user.getBio()}"></p>
-            <p th:text="'上次登录时间:' + ${#dates.format(user.getLoginTime(),'yyyy-MM-dd HH:mm')}"></p>
-        </div>
+        <div class="col-xs-0 col-sm-2 col-md-2 col-lg-3"></div>
     </div>
-    <div class="col-xs-0 col-sm-2 col-md-2 col-lg-3"></div>
-</div>
-<!--帖子-->
-<div>
-    <div class="col-xs-0 col-sm-2 col-md-2 col-lg-3"></div>
-    <div class="col-xs-12 col-sm-8 col-md-8 col-lg-6" style="margin: 30px">
-        <!--标签-->
-        <div class="container-fluid">
-            <ul class="nav nav-pills" role="tablist">
-                <li role="presentation" th:class="${page=='article'}? 'active' : ''" class="active">
-                    <a th:href="@{/account/profile(id=${user.getAccountId()})}" th:text="${title} + '的帖子'">
-                    </a>
-                </li>
-                <li role="presentation" th:class="${page=='comment'}? 'active' : ''" >
-                    <a th:href="@{/account/profile/comment(id=${user.getAccountId()})}" th:text="${title} + '的回复'">
-                    </a>
-                </li>
-            </ul>
-        </div>
-        <!--帖子列表-->
-        <div class="profile-articles" th:if="${page == 'article'}">
-            <div class="media" th:each="article : ${articles}">
-                <div class="media-left">
-                    <a th:href="@{/account/profile(id=${article.getAuthor().getAccountId()})}">
-                        <img class="media-object img-rounded"
-                             th:src="${article.getAuthor().getAvatarUrl()}">
-                    </a>
+    <!--帖子-->
+    <div class="container-fluid">
+        <div class="col-xs-0 col-sm-2 col-md-2 col-lg-3"></div>
+        <div class="col-xs-12 col-sm-8 col-md-8 col-lg-6" style="margin: 30px">
+            <!--标签-->
+            <div class="container-fluid">
+                <ul class="nav nav-pills" role="tablist">
+                    <li role="presentation" th:class="${page=='article'}? 'active' : ''" class="active">
+                        <a th:href="@{/account/profile(id=${user.getAccountId()})}" th:text="${title} + '的帖子'">
+                        </a>
+                    </li>
+                    <li role="presentation" th:class="${page=='comment'}? 'active' : ''" >
+                        <a th:href="@{/account/profile/comment(id=${user.getAccountId()})}" th:text="${title} + '的回复'">
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <!--帖子列表-->
+            <div class="profile-articles" th:if="${page == 'article'}">
+                <div class="media" th:each="article : ${articles}">
+                    <div class="media-left">
+                        <a th:href="@{/account/profile(id=${article.getAuthor().getAccountId()})}">
+                            <img class="media-object img-rounded"
+                                 th:src="${article.getAuthor().getAvatarUrl()}">
+                        </a>
+                    </div>
+                    <div class="media-body">
+                        <h4 class="media-heading">
+                            <a th:href="@{/article/(id= ${article.getId()})}" th:text="${article.getTitle()}"></a>
+                        </h4>
+                        <span class="text-desc"><span th:text="${article.getCommentCount()}"></span> 个回复 •
+                                <span th:text="${article.getViewCount()}"></span> 次浏览 •
+                                <span th:text="${#dates.format(article.getPostTime(),'yyyy-MM-dd HH:mm')}"></span></span>
+                    </div>
                 </div>
-                <div class="media-body">
-                    <h4 class="media-heading">
-                        <a th:href="@{/article/(id= ${article.getId()})}" th:text="${article.getTitle()}"></a>
-                    </h4>
-                    <span class="text-desc"><span th:text="${article.getCommentCount()}"></span> 个回复 •
-                            <span th:text="${article.getViewCount()}"></span> 次浏览 •
-                            <span th:text="${#dates.format(article.getPostTime(),'yyyy-MM-dd HH:mm')}"></span></span>
+            </div>
+            <div class="profile-articles" th:if="${page == 'comment'}" style="height: 700px">
+                <div class="media" th:each="comment : ${comments}">
+                    <!--头像-->
+                    <div class="media-left">
+                        <a th:href="@{/account/profile(id=${comment.getAuthor().getAccountId()})}">
+                            <img class="media-object img-rounded"
+                                 th:src="${comment.getAuthor().getAvatarUrl()}">
+                        </a>
+                    </div>
+                    <!--回复信息-->
+                    <div class="media-body">
+                        <h7 class="media-heading">
+                            <a th:href="@{/article/(id= ${comment.getArticle().getId()})}" th:text="${comment.getContent()}"></a>
+                        </h7>
+                        <p class="media-heading">
+                            <span class="text-desc">来自于主题
+                            </span>
+                            <a th:href="@{/article/(id= ${comment.getArticle().getId()})}" th:text="${comment.getArticle().getTitle()}"></a>
+                            <span class="text-desc">•
+                                <span th:text="${#dates.format(comment.getPostTime(),'yyyy-MM-dd HH:mm')}"></span>
+                            </span>
+                        </p>
+                    </div>
                 </div>
             </div>
         </div>
-        <div class="profile-articles" th:if="${page == 'comment'}" style="height: 700px">
-            <div class="media" th:each="comment : ${comments}">
-                <!--头像-->
-                <div class="media-left">
-                    <a th:href="@{/account/profile(id=${comment.getAuthor().getAccountId()})}">
-                        <img class="media-object img-rounded"
-                             th:src="${comment.getAuthor().getAvatarUrl()}">
-                    </a>
-                </div>
-                <!--回复信息-->
-                <div class="media-body">
-                    <h7 class="media-heading">
-                        <a th:href="@{/article/(id= ${comment.getArticle().getId()})}" th:text="${comment.getContent()}"></a>
-                    </h7>
-                    <p class="media-heading">
-                        <span class="text-desc">来自于主题
-                        </span>
-                        <a th:href="@{/article/(id= ${comment.getArticle().getId()})}" th:text="${comment.getArticle().getTitle()}"></a>
-                        <span class="text-desc">•
-                            <span th:text="${#dates.format(comment.getPostTime(),'yyyy-MM-dd HH:mm')}"></span>
-                        </span>
-                    </p>
-                </div>
-            </div>
-        </div>
+        <div class="col-xs-0 col-sm-2 col-md-2 col-lg-3"></div>
     </div>
-    <div class="col-xs-0 col-sm-2 col-md-2 col-lg-3"></div>
-</div>
-<!--分页-->
-<nav class="pagination-center" aria-label="Page navigation" th:if="${pagination != null && page == 'article'}">
-    <ul class="pagination">
-        <li th:if="${pagination.isShowFirstButton()}">
-            <a th:href="@{/account/profile(page=1,id=${user.getAccountId()})}" aria-label="Previous">
-                <span aria-hidden="true">&lt;&lt;</span>
-            </a>
-        </li>
-        <li th:if="${pagination.isShowPreviousButton()}">
-            <a th:href="@{/account/profile(page=${pagination.getPageNum() - 1},id=${user.getAccountId()})}"
-               aria-label="Previous">
-                <span aria-hidden="true">&lt;</span>
-            </a>
-        </li>
-        <li th:each="page : ${#numbers.sequence(pagination.getFirstPageNum(), pagination.getLastPageNum())}"
-            th:class="${pagination.getPageNum() == page}? 'active' : ''">
-            <a th:href="@{/account/profile(page=${page},id=${user.getAccountId()})}" th:text="${page}"></a>
-        </li>
-        <li th:if="${pagination.isShowNextButton()}">
-            <a th:href="@{/account/profile(page=${pagination.getPageNum() +1 },id=${user.getAccountId()})}"
-               aria-label="Previous">
-                <span aria-hidden="true">&gt;</span>
-            </a>
-        </li>
-        <li th:if="${pagination.isShowLastButton()}">
-            <a th:href="@{/account/profile(page=${pagination.getPageCount()},id=${user.getAccountId()})}"
-               aria-label="Previous">
-                <span aria-hidden="true">&gt;&gt;</span>
-            </a>
-        </li>
-    </ul>
-</nav>
-<nav class="pagination-center" aria-label="Page navigation" th:if="${pagination != null && page == 'comment'}">
-    <ul class="pagination">
-        <li th:if="${pagination.isShowFirstButton()}">
-            <a th:href="@{/account/profile/comment(page=1,id=${user.getAccountId()})}" aria-label="Previous">
-                <span aria-hidden="true">&lt;&lt;</span>
-            </a>
-        </li>
-        <li th:if="${pagination.isShowPreviousButton()}">
-            <a th:href="@{/account/profile/comment(page=${pagination.getPageNum() - 1},id=${user.getAccountId()})}"
-               aria-label="Previous">
-                <span aria-hidden="true">&lt;</span>
-            </a>
-        </li>
-        <li th:each="page : ${#numbers.sequence(pagination.getFirstPageNum(), pagination.getLastPageNum())}"
-            th:class="${pagination.getPageNum() == page}? 'active' : ''">
-            <a th:href="@{/account/profile/comment(page=${page},id=${user.getAccountId()})}" th:text="${page}"></a>
-        </li>
-        <li th:if="${pagination.isShowNextButton()}">
-            <a th:href="@{/account/profile/comment(page=${pagination.getPageNum() +1 },id=${user.getAccountId()})}"
-               aria-label="Previous">
-                <span aria-hidden="true">&gt;</span>
-            </a>
-        </li>
-        <li th:if="${pagination.isShowLastButton()}">
-            <a th:href="@{/account/profile/comment(page=${pagination.getPageCount()},id=${user.getAccountId()})}"
-               aria-label="Previous">
-                <span aria-hidden="true">&gt;&gt;</span>
-            </a>
-        </li>
-    </ul>
-</nav>
+    <!--分页-->
+    <nav aria-label="Page navigation" th:if="${pagination != null && page == 'article'}">
+        <ul class="pagination pagination-ul">
+            <li th:if="${pagination.isShowFirstButton()}">
+                <a th:href="@{/account/profile(page=1,id=${user.getAccountId()})}" aria-label="Previous">
+                    <span aria-hidden="true">&lt;&lt;</span>
+                </a>
+            </li>
+            <li th:if="${pagination.isShowPreviousButton()}">
+                <a th:href="@{/account/profile(page=${pagination.getPageNum() - 1},id=${user.getAccountId()})}"
+                   aria-label="Previous">
+                    <span aria-hidden="true">&lt;</span>
+                </a>
+            </li>
+            <li th:each="page : ${#numbers.sequence(pagination.getFirstPageNum(), pagination.getLastPageNum())}"
+                th:class="${pagination.getPageNum() == page}? 'active pagination-li' : 'pagination-li'">
+                <a th:href="@{/account/profile(page=${page},id=${user.getAccountId()})}" th:text="${page}"></a>
+            </li>
+            <li th:if="${pagination.isShowNextButton()}">
+                <a th:href="@{/account/profile(page=${pagination.getPageNum() +1 },id=${user.getAccountId()})}"
+                   aria-label="Previous">
+                    <span aria-hidden="true">&gt;</span>
+                </a>
+            </li>
+            <li th:if="${pagination.isShowLastButton()}">
+                <a th:href="@{/account/profile(page=${pagination.getPageCount()},id=${user.getAccountId()})}"
+                   aria-label="Previous">
+                    <span aria-hidden="true">&gt;&gt;</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+    <nav aria-label="Page navigation" th:if="${pagination != null && page == 'comment'}">
+        <ul class="pagination pagination-ul">
+            <li th:if="${pagination.isShowFirstButton()}">
+                <a th:href="@{/account/profile/comment(page=1,id=${user.getAccountId()})}" aria-label="Previous">
+                    <span aria-hidden="true">&lt;&lt;</span>
+                </a>
+            </li>
+            <li th:if="${pagination.isShowPreviousButton()}">
+                <a th:href="@{/account/profile/comment(page=${pagination.getPageNum() - 1},id=${user.getAccountId()})}"
+                   aria-label="Previous">
+                    <span aria-hidden="true">&lt;</span>
+                </a>
+            </li>
+            <li th:each="page : ${#numbers.sequence(pagination.getFirstPageNum(), pagination.getLastPageNum())}"
+                th:class="${pagination.getPageNum() == page}? 'active pagination-li' : 'pagination-li'">
+                <a th:href="@{/account/profile/comment(page=${page},id=${user.getAccountId()})}" th:text="${page}"></a>
+            </li>
+            <li th:if="${pagination.isShowNextButton()}">
+                <a th:href="@{/account/profile/comment(page=${pagination.getPageNum() +1 },id=${user.getAccountId()})}"
+                   aria-label="Previous">
+                    <span aria-hidden="true">&gt;</span>
+                </a>
+            </li>
+            <li th:if="${pagination.isShowLastButton()}">
+                <a th:href="@{/account/profile/comment(page=${pagination.getPageCount()},id=${user.getAccountId()})}"
+                   aria-label="Previous">
+                    <span aria-hidden="true">&gt;&gt;</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
 </div>
 </body>
 </html>
