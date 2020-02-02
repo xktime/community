@@ -8,7 +8,7 @@ import javax.servlet.http.Cookie;
 public class CookieService {
 
     /**
-     *  获取cookie中的token
+     * 获取cookie中的token
      */
     public String getToken(Cookie[] cookies) {
         if (cookies == null) {

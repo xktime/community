@@ -37,16 +37,20 @@ public class ArticleService {
         return articleRepository.getArticlesByAccountId(accountId);
     }
 
+    /**
+     * 增加文章的浏览量
+     * @param articleId
+     */
     public void incView(int articleId) {
         articleRepository.incView(articleId);
     }
 
-    public Article getArticleById(int id) {
-        return articleRepository.getArticleById(id);
+    public Article findById(int articleId) {
+        return articleRepository.findById(articleId);
     }
 
     /**
-     *  把后端数据转换成前端显示数据类型
+     * 把后端数据转换成前端显示数据类型
      */
     public ArticleDTO transferArticleToArticleDTO(@NonNull Article article) {
         ArticleDTO articleDTO = new ArticleDTO();
@@ -57,7 +61,7 @@ public class ArticleService {
         }
         articleDTO.setAuthor(userService.transferUserToUserDTO(author));
         BeanUtils.copyProperties(article, articleDTO);
-        articleDTO.setCommentCount(commentService.getCommentCount(article.getId()));
+        articleDTO.setCommentCount(commentService.getCommentsCount(article.getId()));
         if (articleDTO.getPostTime() == null) {
             //如果日期为空,默认时间为1970年
             long time = 0L;
@@ -67,7 +71,7 @@ public class ArticleService {
     }
 
     /**
-     *  把后端数据转换成前端显示数据类型
+     * 把后端数据转换成前端显示数据类型
      */
     public List<ArticleDTO> transferArticleListToArticleDTOList(List<Article> articles) {
         List<ArticleDTO> articleDTOList = new ArrayList<>();

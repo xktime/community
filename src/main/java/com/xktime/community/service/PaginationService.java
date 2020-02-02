@@ -44,7 +44,7 @@ public class PaginationService {
             //如果accountId为空返回该页所有帖子，否则返回用户的该页帖子
             articleList = articleRepository.getUsersArticleListByPage(pageStartIndex, PAGE_SHOW_NUM, accountId);
         } else {
-           articleList = articleRepository.getArticleListByPage(pageStartIndex, PAGE_SHOW_NUM);
+            articleList = articleRepository.getArticleListByPage(pageStartIndex, PAGE_SHOW_NUM);
         }
         return articleService.transferArticleListToArticleDTOList(articleList);
     }
@@ -57,7 +57,8 @@ public class PaginationService {
     }
 
     /**
-     *  获取用户帖子的分页数据
+     * 获取用户帖子的分页数据
+     *
      * @param page
      * @param accountId 如果accountId==0 表示所有的帖子。
      * @return
@@ -104,6 +105,7 @@ public class PaginationService {
 
     /**
      * 如果accountId为空获取所有帖子的总页数，否则获取用户帖子的总页数
+     *
      * @param accountId
      * @return
      */

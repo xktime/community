@@ -25,24 +25,32 @@ public class CommentService {
         commentRepository.saveComment(comment);
     }
 
-    public List<Comment> getCommentByArticleId(int articleId) {
-        return commentRepository.getCommentByArticleId(articleId);
+    public List<Comment> findByArticleId(int articleId) {
+        return commentRepository.findByArticleId(articleId);
     }
 
-    public List<Comment> getCommentByAccountId(String accountId) {
-        return commentRepository.getCommentByAccountId(accountId);
+    public List<Comment> findByAccountId(@NonNull String accountId) {
+        return commentRepository.findByAccountId(accountId);
     }
 
-    public int getCommentCount(int articleId) {
+    /**
+     * 获得文章的评论数量
+     * @param articleId
+     * @return
+     */
+    public int getCommentsCount(int articleId) {
         return commentRepository.getCommentCountByArticleId(articleId);
     }
 
 
     public List<CommentDTO> getCommentDTOList(int articleId) {
-        List<Comment> commentList = getCommentByArticleId(articleId);
+        List<Comment> commentList = findByArticleId(articleId);
         return transferCommentListToCommentDTOList(commentList);
     }
 
+    /**
+     * 把后端数据转换成前端显示数据类型
+     */
     public CommentDTO transferCommentToCommentDTO(@NonNull Comment comment) {
         CommentDTO commentDTO = new CommentDTO();
         User user = userService.findByAccountId(comment.getAuthorAccountId());
@@ -53,9 +61,12 @@ public class CommentService {
         return commentDTO;
     }
 
-    public List<CommentDTO> transferCommentListToCommentDTOList(List<Comment> commentList) {
+    /**
+     * 把后端数据转换成前端显示数据类型
+     */
+    public List<CommentDTO> transferCommentListToCommentDTOList(@NonNull List<Comment> commentList) {
         List<CommentDTO> commentDTOList = new ArrayList<>();
-        if (commentList != null && !commentList.isEmpty()) {
+        if (!commentList.isEmpty()) {
             for (Comment comment : commentList) {
                 commentDTOList.add(transferCommentToCommentDTO(comment));
             }

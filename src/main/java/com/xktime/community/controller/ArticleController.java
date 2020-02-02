@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
-import java.util.List;
 
 @Controller
 @RequestMapping("article")
@@ -30,7 +29,7 @@ public class ArticleController {
     @GetMapping("/")
     public String article(@RequestParam(name = "id") int articleId,
                           Model model) {
-        Article article = articleService.getArticleById(articleId);
+        Article article = articleService.findById(articleId);
         if (article != null) {
             //增加浏览量
             articleService.incView(articleId);
@@ -53,7 +52,7 @@ public class ArticleController {
             model.addAttribute("error", "用户未登录");
             return "article";
         }
-        Article article = articleService.getArticleById(articleId);
+        Article article = articleService.findById(articleId);
         if (article == null) {
             model.addAttribute("error", "文章不存在");
             return "article";

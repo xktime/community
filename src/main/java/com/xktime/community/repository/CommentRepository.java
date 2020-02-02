@@ -17,10 +17,10 @@ public interface CommentRepository {
     void saveComment(Comment comment);
 
     @Select("SELECT * FROM comment WHERE article_id = #{articleId}")
-    List<Comment> getCommentByArticleId(@Param("articleId") int articleId);
+    List<Comment> findByArticleId(@Param("articleId") int articleId);
 
     @Select("SELECT * FROM comment WHERE author_account_id = #{accountId}")
-    List<Comment> getCommentByAccountId(@Param("accountId") String accountId);
+    List<Comment> findByAccountId(@Param("accountId") String accountId);
 
     @Select("SELECT COUNT(*) FROM comment WHERE article_id = #{articleId}")
     int getCommentCountByArticleId(@Param("articleId") int articleId);

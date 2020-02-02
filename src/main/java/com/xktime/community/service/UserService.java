@@ -45,11 +45,15 @@ public class UserService {
         return userRepository.findByAccountId(accountId);
     }
 
+    /**
+     * 把后端数据转换成前端显示数据类型
+     */
     public UserDTO transferUserToUserDTO(User user) {
         UserDTO userDTO = new UserDTO();
         BeanUtils.copyProperties(user, userDTO);
         return userDTO;
     }
+
     /**
      * 获得一个已注销的账户,并将其放入用户数据库中（似乎没什么必要放）
      */
