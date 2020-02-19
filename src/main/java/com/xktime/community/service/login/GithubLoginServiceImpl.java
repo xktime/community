@@ -6,7 +6,6 @@ import com.xktime.community.model.dto.GithubUserDTO;
 import com.xktime.community.model.entity.User;
 import com.xktime.community.model.enums.ScopeEnum;
 import okhttp3.*;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -17,13 +16,13 @@ import java.util.UUID;
 @Service
 public class GithubLoginServiceImpl implements LoginService {
     @Value("${login.github.client.id}")
-    private String client_id;
+    private String CLIENT_ID;
     @Value("${login.github.redirect.client_secret}")
-    private String client_secret;
+    private String CLIENT_SECRET;
     @Value("${login.github.redirect.uri}")
-    private String redirect_uri;
+    private String REDIRECT_URI;
     @Value("${login.github.request.uri}")
-    private String request_uri;
+    private String REQUEST_URI;
 
     @Override
     public User getUser(String code, String state) {
@@ -45,8 +44,8 @@ public class GithubLoginServiceImpl implements LoginService {
         if (state == null) {
             throw new IllegalArgumentException("state不能为空");
         }
-        StringBuilder requestUri = new StringBuilder(request_uri).append("?");
-        requestUri.append("client_id=").append(client_id);
+        StringBuilder requestUri = new StringBuilder(REQUEST_URI).append("?");
+        requestUri.append("client_id=").append(CLIENT_ID);
         requestUri.append("&redirect_uri=").append(requestUri);
         requestUri.append("&state=").append(state);
         if (scope != null) {
@@ -92,9 +91,9 @@ public class GithubLoginServiceImpl implements LoginService {
         GithubAccessTokenDTO accessTokenDTO = new GithubAccessTokenDTO();
         accessTokenDTO.setState(state);
         accessTokenDTO.setCode(code);
-        accessTokenDTO.setClient_id(client_id);
-        accessTokenDTO.setClient_secret(client_secret);
-        accessTokenDTO.setRedirect_uri(redirect_uri);
+        accessTokenDTO.setClient_id(CLIENT_ID);
+        accessTokenDTO.setClient_secret(CLIENT_SECRET);
+        accessTokenDTO.setRedirect_uri(REDIRECT_URI);
         return getGithubUserByToken(getAccessToken(accessTokenDTO));
     }
 
