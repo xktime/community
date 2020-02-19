@@ -12,6 +12,6 @@ public class SearchController {
 
 	@PostMapping("search")
 	public String search(@RequestParam(name = "desc") String desc) {
-		return null;
+		return "index";
 	}
 }
