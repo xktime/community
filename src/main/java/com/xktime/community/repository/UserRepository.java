@@ -2,8 +2,10 @@ package com.xktime.community.repository;
 
 import com.xktime.community.model.entity.User;
 import org.apache.ibatis.annotations.*;
+import org.springframework.stereotype.Repository;
 
 @Mapper
+@Repository
 public interface UserRepository {
     @Insert("INSERT INTO user(name,account_id,bio,login,token,login_time,avatar_url) " +
             "VALUES (#{name},#{accountId},#{bio},#{login},#{token},#{loginTime},#{avatarUrl})")
