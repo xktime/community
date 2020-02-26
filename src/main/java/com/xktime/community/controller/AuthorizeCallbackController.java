@@ -36,6 +36,7 @@ public class AuthorizeCallbackController {
             Cookie cookie = new Cookie("token", user.getToken());
             cookie.setPath("/");
             response.addCookie(cookie);
+            //Shiro验证登陆
             Subject subject = SecurityUtils.getSubject();
             UsernamePasswordToken usernamePasswordToken = new UsernamePasswordToken(user.getAccountId(), user.getToken());
             subject.login(usernamePasswordToken);

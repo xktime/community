@@ -36,6 +36,7 @@ public class AccountController {
                             Model model,
                             @RequestParam(name = "page", defaultValue = "1") int page) {
         model.addAttribute("title", "我的帖子");
+        //获取Shiro的session
         Subject subject = SecurityUtils.getSubject();
         Session session = subject.getSession();
         Object object = session.getAttribute("user");

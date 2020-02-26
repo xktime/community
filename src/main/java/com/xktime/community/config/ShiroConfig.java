@@ -20,7 +20,7 @@ public class ShiroConfig {
          * anon:	无需认证即可访问
          * authc:	需要认证才可访问
          * user:	点击“记住我”功能可访问
-         * perms:	拥有权限才可以访问
+         * perms:	拥有权限才可以访问 perms[权限名]
          * role:	拥有某个角色权限才能访问
          */
         //添加拦截
