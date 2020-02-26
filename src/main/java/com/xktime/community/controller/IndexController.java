@@ -5,6 +5,9 @@ import com.xktime.community.model.entity.User;
 import com.xktime.community.service.CookieService;
 import com.xktime.community.service.PaginationService;
 import com.xktime.community.service.UserService;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.session.Session;
+import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -33,7 +36,9 @@ public class IndexController {
             //登陆缓存
             User user = userService.findByToken(token);
             if (user != null) {
-                request.getSession().setAttribute("user", user);
+                Subject subject = SecurityUtils.getSubject();
+                Session session = subject.getSession();
+                session.setAttribute("user", user);
             }
         }
         model.addAttribute("title", "发现");

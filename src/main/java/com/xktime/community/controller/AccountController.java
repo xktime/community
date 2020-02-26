@@ -7,6 +7,9 @@ import com.xktime.community.model.entity.User;
 import com.xktime.community.service.ArticleService;
 import com.xktime.community.service.PaginationService;
 import com.xktime.community.service.UserService;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.session.Session;
+import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -33,7 +36,9 @@ public class AccountController {
                             Model model,
                             @RequestParam(name = "page", defaultValue = "1") int page) {
         model.addAttribute("title", "我的帖子");
-        Object object = request.getSession().getAttribute("user");
+        Subject subject = SecurityUtils.getSubject();
+        Session session = subject.getSession();
+        Object object = session.getAttribute("user");
         if (object instanceof User) {
             User user = (User) object;
             //帖子数据
