@@ -25,7 +25,6 @@ public class ShiroConfig {
          */
         //添加拦截
         Map<String, String> filterMap = new LinkedHashMap<>();//Map<url, 权限>
-        filterMap.put("/publish/", "authc");
         filterMap.put("/login/*", "anon");
         filterBean.setFilterChainDefinitionMap(filterMap);
         return filterBean;
