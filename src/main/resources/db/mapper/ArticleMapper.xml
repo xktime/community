@@ -6,7 +6,7 @@
         VALUES (#{title},#{content},#{authorAccountId},#{postTime})
     </insert>
 
-    <select id="findById" resultType="Article">
+    <select id="findById" parameterType="int" resultType="Article">
         SELECT * FROM article WHERE id = #{id}
     </select>
 
@@ -34,7 +34,7 @@
         SELECT COUNT(*) FROM article
     </select>
 
-    <select id="getCountByAccountId" resultType="int">
+    <select id="getCountByAccountId" parameterType="String" resultType="int">
         SELECT COUNT(*) FROM article WHERE author_account_id = #{accountId}
     </select>
 

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xktime.community.repository.CommentRepository">
+    <insert id="saveComment" parameterType="Comment">
+        INSERT INTO comment(article_id,author_account_id,post_time,content)
+        VALUES (#{articleId},#{authorAccountId},#{postTime},#{content})
+    </insert>
+
+    <select id="findByArticleId" parameterType="int" resultType="Comment">
+        SELECT * FROM comment WHERE article_id = #{articleId}
+    </select>
+
+    <select id="findByAccountId" parameterType="String" resultType="Comment">
+        SELECT * FROM comment WHERE author_account_id = #{accountId}
+    </select>
+
+    <select id="findByOffsetAndArticleId" resultType="Comment">
+        SELECT * FROM comment WHERE article_id = #{articleId}
+        LIMIT #{pageShowNum} OFFSET #{pageStartIndex}
+    </select>
+
+    <select id="findByOffsetAndAccountId" resultType="Comment">
+        SELECT * FROM comment WHERE author_account_id = #{accountId}
+        LIMIT #{pageShowNum} OFFSET #{pageStartIndex}
+    </select>
+
+    <select id="getCommentCountByArticleId" parameterType="int" resultType="int">
+        SELECT COUNT(*) FROM comment WHERE article_id = #{articleId}
+    </select>
+
+    <select id="getCommentCountByAccountId" parameterType="String" resultType="int">
+        SELECT COUNT(*) FROM comment WHERE author_account_id = #{accountId}
+    </select>
+</mapper>
